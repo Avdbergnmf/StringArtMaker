@@ -20,10 +20,10 @@ Nshift = 0
 Nshift2 = 0
 
 layer2_Nshift = 0
-layer2_Nshift2 = 10
+layer2_Nshift2 = 5
 
 layer3_Nshift = 0
-layer3_Nshift2 = 10
+layer3_Nshift2 = 5
 
 Nshift_recht = 0
 
@@ -175,28 +175,36 @@ plt.axis([-blat,breedte+blat,-blat,breedte+blat])
 plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 #plot patterns
+
+
+# plt.plot(cross1X,cross1Y,'b-')
+# plt.plot(cross2X,cross2Y,'b-')
+
+plt.plot(layer2_hoek1X,layer2_hoek1Y,'m-')
+plt.plot(layer2_hoek3X,layer2_hoek3Y,'m-')
+plt.plot(layer3_hoek2X,layer3_hoek2Y,'m-')
+plt.plot(layer3_hoek4X,layer3_hoek4Y,'m-')
+
 plt.plot(hoek1X,hoek1Y,'r-')
 plt.plot(hoek2X,hoek2Y,'r-')
 plt.plot(hoek3X,hoek3Y,'r-')
 plt.plot(hoek4X,hoek4Y,'r-')
 
-plt.plot(layer2_hoek1X,layer2_hoek1Y,'m-')
 plt.plot(layer2_hoek2X,layer2_hoek2Y,'b-')
-plt.plot(layer2_hoek3X,layer2_hoek3Y,'m-')
 plt.plot(layer2_hoek4X,layer2_hoek4Y,'b-')
-
 plt.plot(layer3_hoek1X,layer3_hoek1Y,'b-')
-plt.plot(layer3_hoek2X,layer3_hoek2Y,'m-')
 plt.plot(layer3_hoek3X,layer3_hoek3Y,'b-')
-plt.plot(layer3_hoek4X,layer3_hoek4Y,'m-')
+
+
+
+
 
 # plt.plot(recht1X,recht1Y,'b-')
 # plt.plot(recht2X,recht2Y,'b-')
 # plt.plot(recht3X,recht3Y,'b-')
 # plt.plot(recht4X,recht4Y,'b-')
 
-# plt.plot(cross1X,cross1Y,'b-')
-# plt.plot(cross2X,cross2Y,'b-')
+
 
 plt.show()
 fig.savefig("squareC_9.png")
