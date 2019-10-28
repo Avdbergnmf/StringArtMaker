@@ -7,7 +7,7 @@ import math
 blat = 30
 
 breedte = 450-blat #mm
-Nspijkers = 42
+Nspijkers = 21
 
 afstand = breedte/Nspijkers
 
@@ -15,6 +15,14 @@ x1 = np.linspace(0,breedte,Nspijkers) #onder
 y1 = np.linspace(0,breedte,Nspijkers) #rechts
 x2 = np.linspace(breedte,0,Nspijkers) #boven
 y2 = np.linspace(breedte,0,Nspijkers) #links
+
+Nshift = 0
+Nshift2 = 10
+
+layer2_Nshift = 0
+layer2_Nshift2 = 15
+
+Nshift_recht = 0
 
 cross1X = []
 cross1Y = []
@@ -39,26 +47,77 @@ hoek3X = []
 hoek3Y = []
 hoek4X = []
 hoek4Y = []
-for i in range(len(x1)):
+for i in range(Nshift,len(x1)-Nshift2):
 	hoek1X.append(x1[i])
  	hoek1X.append(breedte)
 	hoek1Y.append(0)
-	hoek1Y.append(y1[i])
+	hoek1Y.append(y1[i+Nshift2])
 
 	hoek2X.append(breedte)
 	hoek2X.append(x2[i])
-	hoek2Y.append(y1[i])
+	hoek2Y.append(y1[i+Nshift2])
 	hoek2Y.append(breedte)
 
 	hoek3X.append(x2[i])
  	hoek3X.append(0)
 	hoek3Y.append(breedte)
-	hoek3Y.append(y2[i])
+	hoek3Y.append(y2[i+Nshift2])
 
 	hoek4X.append(0)
 	hoek4X.append(x1[i])
-	hoek4Y.append(y2[i])
+	hoek4Y.append(y2[i+Nshift2])
 	hoek4Y.append(0)
+
+# for i in range(Nshift,len(x1)-Nshift2):
+#  	hoek1X.append(breedte)
+# 	hoek1X.append(x1[i])
+# 	hoek1Y.append(y1[i+Nshift2])
+# 	hoek1Y.append(0)
+
+# 	hoek2X.append(x2[i])
+# 	hoek2X.append(breedte)
+# 	hoek2Y.append(breedte)
+# 	hoek2Y.append(y1[i+Nshift2])
+
+# 	hoek3X.append(0)
+# 	hoek3X.append(x2[i])
+# 	hoek3Y.append(y2[i+Nshift2])
+# 	hoek3Y.append(breedte)
+
+# 	hoek4X.append(x1[i])
+# 	hoek4X.append(0)
+# 	hoek4Y.append(0)
+# 	hoek4Y.append(y2[i+Nshift2])
+
+layer2_hoek1X = []
+layer2_hoek1Y = []
+layer2_hoek2X = []
+layer2_hoek2Y = []
+layer2_hoek3X = []
+layer2_hoek3Y = []
+layer2_hoek4X = []
+layer2_hoek4Y = []
+for i in range(layer2_Nshift,len(x1)-layer2_Nshift2):
+	layer2_hoek1X.append(x1[i])
+ 	layer2_hoek1X.append(breedte)
+	layer2_hoek1Y.append(0)
+	layer2_hoek1Y.append(y1[i+layer2_Nshift2])
+
+	layer2_hoek2X.append(breedte)
+	layer2_hoek2X.append(x2[i])
+	layer2_hoek2Y.append(y1[i+layer2_Nshift2])
+	layer2_hoek2Y.append(breedte)
+
+	layer2_hoek3X.append(x2[i])
+ 	layer2_hoek3X.append(0)
+	layer2_hoek3Y.append(breedte)
+	layer2_hoek3Y.append(y2[i+layer2_Nshift2])
+
+	layer2_hoek4X.append(0)
+	layer2_hoek4X.append(x1[i])
+	layer2_hoek4Y.append(y2[i+layer2_Nshift2])
+	layer2_hoek4Y.append(0)
+
 
 recht1X = []
 recht1Y = []
@@ -68,27 +127,26 @@ recht3X = []
 recht3Y = []
 recht4X = []
 recht4Y = []
-for i in range(len(x1)):
+for i in range(Nshift_recht, len(x1)):
 	recht1X.append(x1[i])
  	recht1X.append(breedte)
 	recht1Y.append(0)
-	recht1Y.append(y2[i])
+	recht1Y.append(y1[Nspijkers-1-i+Nshift_recht])
 
 	recht2X.append(breedte)
 	recht2X.append(x2[i])
-	recht2Y.append(y2[i])
+	recht2Y.append(y1[Nspijkers-1-i+Nshift_recht])
 	recht2Y.append(breedte)
 
 	recht3X.append(x2[i])
  	recht3X.append(0)
 	recht3Y.append(breedte)
-	recht3Y.append(y1[i])
+	recht3Y.append(y2[Nspijkers-1-i+Nshift_recht])
 
 	recht4X.append(0)
-	recht4X.append(x2[i])
-	recht4Y.append(y2[i])
+	recht4X.append(x1[i])
+	recht4Y.append(y2[Nspijkers-1-i+Nshift_recht])
 	recht4Y.append(0)
-	
 
 fig = plt.figure()
 #contour
@@ -107,16 +165,21 @@ plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 #plot patterns
 plt.plot(hoek1X,hoek1Y,'r-')
-plt.plot(hoek2X,hoek2Y,'b-')
+plt.plot(hoek2X,hoek2Y,'r-')
 plt.plot(hoek3X,hoek3Y,'r-')
-plt.plot(hoek4X,hoek4Y,'b-')
+plt.plot(hoek4X,hoek4Y,'r-')
 
-# plt.plot(recht1X,recht1Y,'c-')
+plt.plot(layer2_hoek1X,layer2_hoek1Y,'b-')
+plt.plot(layer2_hoek2X,layer2_hoek2Y,'b-')
+plt.plot(layer2_hoek3X,layer2_hoek3Y,'b-')
+plt.plot(layer2_hoek4X,layer2_hoek4Y,'b-')
+
+# plt.plot(recht1X,recht1Y,'b-')
 # plt.plot(recht2X,recht2Y,'b-')
-# plt.plot(recht3X,recht3Y,'c-')
+# plt.plot(recht3X,recht3Y,'b-')
 # plt.plot(recht4X,recht4Y,'b-')
 
-plt.plot(cross1X,cross1Y,'m-')
+# plt.plot(cross1X,cross1Y,'b-')
 # plt.plot(cross2X,cross2Y,'b-')
 
 plt.show()
