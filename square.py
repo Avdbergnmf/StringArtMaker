@@ -17,10 +17,13 @@ x2 = np.linspace(breedte,0,Nspijkers) #boven
 y2 = np.linspace(breedte,0,Nspijkers) #links
 
 Nshift = 0
-Nshift2 = 10
+Nshift2 = 0
 
 layer2_Nshift = 0
-layer2_Nshift2 = 15
+layer2_Nshift2 = 10
+
+layer3_Nshift = 0
+layer3_Nshift2 = 10
 
 Nshift_recht = 0
 
@@ -68,27 +71,6 @@ for i in range(Nshift,len(x1)-Nshift2):
 	hoek4Y.append(y2[i+Nshift2])
 	hoek4Y.append(0)
 
-# for i in range(Nshift,len(x1)-Nshift2):
-#  	hoek1X.append(breedte)
-# 	hoek1X.append(x1[i])
-# 	hoek1Y.append(y1[i+Nshift2])
-# 	hoek1Y.append(0)
-
-# 	hoek2X.append(x2[i])
-# 	hoek2X.append(breedte)
-# 	hoek2Y.append(breedte)
-# 	hoek2Y.append(y1[i+Nshift2])
-
-# 	hoek3X.append(0)
-# 	hoek3X.append(x2[i])
-# 	hoek3Y.append(y2[i+Nshift2])
-# 	hoek3Y.append(breedte)
-
-# 	hoek4X.append(x1[i])
-# 	hoek4X.append(0)
-# 	hoek4Y.append(0)
-# 	hoek4Y.append(y2[i+Nshift2])
-
 layer2_hoek1X = []
 layer2_hoek1Y = []
 layer2_hoek2X = []
@@ -97,7 +79,7 @@ layer2_hoek3X = []
 layer2_hoek3Y = []
 layer2_hoek4X = []
 layer2_hoek4Y = []
-for i in range(layer2_Nshift,len(x1)-layer2_Nshift2):
+for i in range(layer2_Nshift+1,len(x1)-layer2_Nshift2):
 	layer2_hoek1X.append(x1[i])
  	layer2_hoek1X.append(breedte)
 	layer2_hoek1Y.append(0)
@@ -117,6 +99,35 @@ for i in range(layer2_Nshift,len(x1)-layer2_Nshift2):
 	layer2_hoek4X.append(x1[i])
 	layer2_hoek4Y.append(y2[i+layer2_Nshift2])
 	layer2_hoek4Y.append(0)
+
+layer3_hoek1X = []
+layer3_hoek1Y = []
+layer3_hoek2X = []
+layer3_hoek2Y = []
+layer3_hoek3X = []
+layer3_hoek3Y = []
+layer3_hoek4X = []
+layer3_hoek4Y = []
+for i in range(layer3_Nshift,len(x1)-layer3_Nshift2):
+	layer3_hoek1X.append(x1[Nspijkers-1-i])
+ 	layer3_hoek1X.append(breedte)
+	layer3_hoek1Y.append(0)
+	layer3_hoek1Y.append(y1[Nspijkers-i-layer3_Nshift2])
+
+	layer3_hoek2X.append(breedte)
+	layer3_hoek2X.append(x2[Nspijkers-1-i])
+	layer3_hoek2Y.append(y1[Nspijkers-i-layer3_Nshift2])
+	layer3_hoek2Y.append(breedte)
+
+	layer3_hoek3X.append(x2[Nspijkers-1-i])
+ 	layer3_hoek3X.append(0)
+	layer3_hoek3Y.append(breedte)
+	layer3_hoek3Y.append(y2[Nspijkers-i-layer3_Nshift2])
+
+	layer3_hoek4X.append(0)
+	layer3_hoek4X.append(x1[Nspijkers-1-i])
+	layer3_hoek4Y.append(y2[Nspijkers-i-layer3_Nshift2])
+	layer3_hoek4Y.append(0)
 
 
 recht1X = []
@@ -169,10 +180,15 @@ plt.plot(hoek2X,hoek2Y,'r-')
 plt.plot(hoek3X,hoek3Y,'r-')
 plt.plot(hoek4X,hoek4Y,'r-')
 
-plt.plot(layer2_hoek1X,layer2_hoek1Y,'b-')
+plt.plot(layer2_hoek1X,layer2_hoek1Y,'m-')
 plt.plot(layer2_hoek2X,layer2_hoek2Y,'b-')
-plt.plot(layer2_hoek3X,layer2_hoek3Y,'b-')
+plt.plot(layer2_hoek3X,layer2_hoek3Y,'m-')
 plt.plot(layer2_hoek4X,layer2_hoek4Y,'b-')
+
+plt.plot(layer3_hoek1X,layer3_hoek1Y,'b-')
+plt.plot(layer3_hoek2X,layer3_hoek2Y,'m-')
+plt.plot(layer3_hoek3X,layer3_hoek3Y,'b-')
+plt.plot(layer3_hoek4X,layer3_hoek4Y,'m-')
 
 # plt.plot(recht1X,recht1Y,'b-')
 # plt.plot(recht2X,recht2Y,'b-')
@@ -183,7 +199,7 @@ plt.plot(layer2_hoek4X,layer2_hoek4Y,'b-')
 # plt.plot(cross2X,cross2Y,'b-')
 
 plt.show()
-# fig.savefig("plot.png")
+fig.savefig("squareC_9.png")
 
 
 # COLORS
@@ -210,8 +226,5 @@ for count in range(1,len(cross1X)):
 for count in range(1,len(recht1X)):
 	distanceRecht += math.sqrt(math.pow(recht1X[count]-recht1X[count-1],2) + math.pow(recht1Y[count]-recht1Y[count-1],2))
 
-print distanceKruis
-print distanceHoek
-print distanceRecht
-
-print (distanceHoek*4+distanceKruis*2)
+print("Lengte String: " + str(round((distanceHoek*4)/1000,2)) + "m")
+print("Aantal Spijkers: " + str(Nspijkers*4-4))

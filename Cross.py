@@ -229,3 +229,7 @@ for count in range(1,len(layer3_hoek1X)):
 # 	distanceHoek_straight += math.sqrt(math.pow(straight_hoek1X[count]-straight_hoek1X[count-1],2) + math.pow(straight_hoek1Y[count]-straight_hoek1Y[count-1],2))
 
 print ((distanceHoek+distanceHoek_layer2+distanceHoek_layer3)*4)
+
+
+print("Lengte String: " + str(round((distanceHoek+distanceHoek_layer2+distanceHoek_layer3)*4/1000,2)) + "m")
+print("Aantal Spijkers: " + str(Nspijkers*4-4))
