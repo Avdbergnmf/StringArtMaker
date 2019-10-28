@@ -6,7 +6,7 @@ import math
 
 blat = 30
 
-breedte = 450-blat #mm
+breedte = 445-blat #mm
 Nspijkers = 21 #mm
 
 afstand = breedte/Nspijkers
@@ -21,8 +21,8 @@ y2 = np.linspace(0,hoogte,Nspijkers)
 x3 = np.linspace(helft,0,Nspijkers)
 y3 = np.linspace(hoogte,0,Nspijkers)
 
-Nshift = 6
-extra_Nshift = 4
+Nshift = 0
+extra_Nshift = 10
 
 hoek1X = []
 hoek1Y = []
@@ -75,22 +75,30 @@ plt.plot(x2,y2,'ko')
 plt.plot(x3,y3,'ko')
 
 # outer contour
+latafstandboven = np.sqrt(3)*blat/2
+latafstandschuin = (blat/2)/np.tan(np.pi/6)
+plt.plot([-latafstandschuin,breedte+blat,helft,-latafstandschuin],[-latafstandschuin/2,-latafstandschuin/2,hoogte+latafstandboven,-latafstandschuin/2],'k')
+plt.plot([latafstandschuin,breedte-latafstandschuin,helft,latafstandschuin],[latafstandschuin/2,latafstandschuin/2,hoogte-latafstandboven,latafstandschuin/2],'k')
 
 
-plt.axis([-afstand,breedte+afstand,-afstand,hoogte+afstand])
+plt.axis([-blat,breedte+blat,-blat,hoogte+blat])
+plt.ylabel("hoogte [mm]")
+plt.xlabel("breedte [mm]")
 plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 #plot patterns
-plt.plot(hoek1X,hoek1Y,'r-')
-plt.plot(hoek2X,hoek2Y,'r-')
-plt.plot(hoek3X,hoek3Y,'r-')
-
 plt.plot(extra_hoek1X,extra_hoek1Y,'y-')
 plt.plot(extra_hoek2X,extra_hoek2Y,'y-')
 plt.plot(extra_hoek3X,extra_hoek3Y,'y-')
 
+plt.plot(hoek1X,hoek1Y,'r-')
+plt.plot(hoek2X,hoek2Y,'r-')
+plt.plot(hoek3X,hoek3Y,'r-')
+
+
+
 plt.show()
-# fig.savefig("plot.png")
+fig.savefig("triangleC_6.png")
 
 
 # COLORS
@@ -113,8 +121,5 @@ for count in range(1,len(hoek1X)):
 for count in range(1,len(extra_hoek1Y)):
 	distanceExtra_Hoek += math.sqrt(math.pow(extra_hoek1X[count]-extra_hoek1X[count-1],2) + math.pow(extra_hoek1Y[count]-extra_hoek1Y[count-1],2))
 
-print distanceHoek
-print distanceExtra_Hoek
-
-
-print (distanceHoek*3+distanceExtra_Hoek*3)
+print("Lengte String: " + str(round((distanceHoek*3+distanceExtra_Hoek*3)/1000,2)) + "m")
+print("Aantal Spijkers: " + str(Nspijkers*3-3))
