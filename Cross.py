@@ -22,11 +22,11 @@ y3 = np.zeros(Nspijkers)
 x4 = np.zeros(Nspijkers) # onder
 y4 = np.linspace(0,-helft,Nspijkers)
 
-Nshift = 0
-Nshift2 = 0
+Nshift = 5
+Nshift2 = 5
 
-layer2_Nshift = 5
-layer2_Nshift2 = 10
+layer2_Nshift = 0
+layer2_Nshift2 = 15
 
 layer3_Nshift = 10
 layer3_Nshift2 = 0
@@ -44,24 +44,24 @@ hoek4X = []
 hoek4Y = []
 for i in range(0,Nspijkers-Nshift2-Nshift):
 	hoek1X.append(x1[i+Nshift2])
- 	hoek1X.append(x2[Nspijkers-1-i-Nshift])
-	hoek1Y.append(y1[i+Nshift2])
+ 	hoek1X.append(0)
+	hoek1Y.append(0)
 	hoek1Y.append(y2[Nspijkers-1-i-Nshift])
 
-	hoek2X.append(x2[i+Nshift2])
+	hoek2X.append(0)
  	hoek2X.append(x3[Nspijkers-1-i-Nshift])
 	hoek2Y.append(y2[i+Nshift2])
-	hoek2Y.append(y3[Nspijkers-1-i-Nshift])
+	hoek2Y.append(0)
 
 	hoek3X.append(x3[i+Nshift2])
- 	hoek3X.append(x4[Nspijkers-1-i-Nshift])
-	hoek3Y.append(y3[i+Nshift2])
+ 	hoek3X.append(0)
+	hoek3Y.append(0)
 	hoek3Y.append(y4[Nspijkers-1-i-Nshift])
 
-	hoek4X.append(x4[i+Nshift2])
+	hoek4X.append(0)
  	hoek4X.append(x1[Nspijkers-1-i-Nshift])
 	hoek4Y.append(y4[i+Nshift2])
-	hoek4Y.append(y1[Nspijkers-1-i-Nshift])
+	hoek4Y.append(0)
 
 layer2_hoek1X = []
 layer2_hoek1Y = []
@@ -73,24 +73,24 @@ layer2_hoek4X = []
 layer2_hoek4Y = []
 for i in range(0,Nspijkers-layer2_Nshift2-layer2_Nshift):
 	layer2_hoek1X.append(x1[i+layer2_Nshift2])
- 	layer2_hoek1X.append(x2[Nspijkers-1-i-layer2_Nshift])
-	layer2_hoek1Y.append(y1[i+layer2_Nshift2])
+ 	layer2_hoek1X.append(0)
+	layer2_hoek1Y.append(0)
 	layer2_hoek1Y.append(y2[Nspijkers-1-i-layer2_Nshift])
 
-	layer2_hoek2X.append(x2[i+layer2_Nshift2])
+	layer2_hoek2X.append(0)
  	layer2_hoek2X.append(x3[Nspijkers-1-i-layer2_Nshift])
 	layer2_hoek2Y.append(y2[i+layer2_Nshift2])
-	layer2_hoek2Y.append(y3[Nspijkers-1-i-layer2_Nshift])
+	layer2_hoek2Y.append(0)
 
 	layer2_hoek3X.append(x3[i+layer2_Nshift2])
- 	layer2_hoek3X.append(x4[Nspijkers-1-i-layer2_Nshift])
-	layer2_hoek3Y.append(y3[i+layer2_Nshift2])
+ 	layer2_hoek3X.append(0)
+	layer2_hoek3Y.append(0)
 	layer2_hoek3Y.append(y4[Nspijkers-1-i-layer2_Nshift])
 
-	layer2_hoek4X.append(x4[i+layer2_Nshift2])
+	layer2_hoek4X.append(0)
  	layer2_hoek4X.append(x1[Nspijkers-1-i-layer2_Nshift])
 	layer2_hoek4Y.append(y4[i+layer2_Nshift2])
-	layer2_hoek4Y.append(y1[Nspijkers-1-i-layer2_Nshift])
+	layer2_hoek4Y.append(0)
 
 layer3_hoek1X = []
 layer3_hoek1Y = []
@@ -102,24 +102,24 @@ layer3_hoek4X = []
 layer3_hoek4Y = []
 for i in range(0,Nspijkers-layer3_Nshift2-layer3_Nshift):
 	layer3_hoek1X.append(x1[i+layer3_Nshift2])
- 	layer3_hoek1X.append(x2[Nspijkers-1-i-layer3_Nshift])
-	layer3_hoek1Y.append(y1[i+layer3_Nshift2])
+ 	layer3_hoek1X.append(0)
+	layer3_hoek1Y.append(0)
 	layer3_hoek1Y.append(y2[Nspijkers-1-i-layer3_Nshift])
 
-	layer3_hoek2X.append(x2[i+layer3_Nshift2])
+	layer3_hoek2X.append(0)
  	layer3_hoek2X.append(x3[Nspijkers-1-i-layer3_Nshift])
 	layer3_hoek2Y.append(y2[i+layer3_Nshift2])
-	layer3_hoek2Y.append(y3[Nspijkers-1-i-layer3_Nshift])
+	layer3_hoek2Y.append(0)
 
 	layer3_hoek3X.append(x3[i+layer3_Nshift2])
- 	layer3_hoek3X.append(x4[Nspijkers-1-i-layer3_Nshift])
-	layer3_hoek3Y.append(y3[i+layer3_Nshift2])
+ 	layer3_hoek3X.append(0)
+	layer3_hoek3Y.append(0)
 	layer3_hoek3Y.append(y4[Nspijkers-1-i-layer3_Nshift])
 
-	layer3_hoek4X.append(x4[i+layer3_Nshift2])
+	layer3_hoek4X.append(0)
  	layer3_hoek4X.append(x1[Nspijkers-1-i-layer3_Nshift])
 	layer3_hoek4Y.append(y4[i+layer3_Nshift2])
-	layer3_hoek4Y.append(y1[Nspijkers-1-i-layer3_Nshift])
+	layer3_hoek4Y.append(0)
 
 
 straight_hoek1X = []
@@ -132,24 +132,24 @@ straight_hoek4X = []
 straight_hoek4Y = []
 for i in range(straight_Nshift,Nspijkers-straight_Nshift2):
 	straight_hoek1X.append(x1[i])
- 	straight_hoek1X.append(x2[i])
-	straight_hoek1Y.append(y1[i])
+ 	straight_hoek1X.append(0)
+	straight_hoek1Y.append(0)
 	straight_hoek1Y.append(y2[i])
 
-	straight_hoek2X.append(x2[i])
+	straight_hoek2X.append(0)
  	straight_hoek2X.append(x3[i])
 	straight_hoek2Y.append(y2[i])
-	straight_hoek2Y.append(y3[i])
+	straight_hoek2Y.append(0)
 
 	straight_hoek3X.append(x3[i])
- 	straight_hoek3X.append(x4[i])
-	straight_hoek3Y.append(y3[i])
+ 	straight_hoek3X.append(0)
+	straight_hoek3Y.append(0)
 	straight_hoek3Y.append(y4[i])
 
-	straight_hoek4X.append(x4[i])
+	straight_hoek4X.append(0)
  	straight_hoek4X.append(x1[i])
 	straight_hoek4Y.append(y4[i])
-	straight_hoek4Y.append(y1[i])
+	straight_hoek4Y.append(0)
 
 fig = plt.figure()
 #contour
@@ -198,7 +198,7 @@ plt.plot(layer3_hoek4X,layer3_hoek4Y,'y-',linewidth=1.0)
 # plt.plot(straight_hoek4X,straight_hoek4Y,'y-')
 
 plt.show()
-# fig.savefig("plot.png")
+fig.savefig("cross1.png")
 
 # COLORS
 # blue		b	[0,0,1]

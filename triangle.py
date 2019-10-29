@@ -21,8 +21,8 @@ y2 = np.linspace(0,hoogte,Nspijkers)
 x3 = np.linspace(helft,0,Nspijkers)
 y3 = np.linspace(hoogte,0,Nspijkers)
 
-Nshift = 0
-extra_Nshift = 10
+Nshift = 5
+extra_Nshift = 15
 
 hoek1X = []
 hoek1Y = []
