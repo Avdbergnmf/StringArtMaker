@@ -80,13 +80,13 @@ class Curve(Cross):
 			# StringLength += self.StringLengthThis
 
 
-	def plot(sself,color='b',makePic=0,tutName="Cross",makeGif=0):
+	def plot(self,color='b',makePic=0,tutName="Cross",makeGif=0):
 		if(makeGif):
-			for i in range(1,len(self.curve1X)+1):
-				plt.plot(self.curve1X[0:i],self.curve1Y[0:i],color,linewidth=1)
+			for i in range(1,len(self.curveX)+1):
+				plt.plot(self.curveX[0:i],self.curveY[0:i],color,linewidth=1)
 				fig.savefig(tutName+str(i)+".png")
 		else:
-			plt.plot(self.curve1X,self.curve1Y,color,linewidth=1)
+			plt.plot(self.curveX,self.curveY,color,linewidth=1)
 			if(makePic):
 				fig.savefig(tutName+".png")
 
@@ -140,20 +140,20 @@ class Straight(Cross):
 
 
 c1 = Curve(500,16,38,-4,0,0)
-# c2 = Curve(500,13,38,-4,0,5)
-# c3 = Curve(500,13,38,5,0,0)
+c2 = Curve(500,13,38,-4,0,5)
+c3 = Curve(500,13,38,5,0,0)
 s1 = Straight(500,16,38,0,11,0)
 
 
 fig = plt.figure()
 c1.plotCross()
-# c1.plot('r',1,"1CrossA")
-s1.plot('b',1,"1CrossA")
+c1.plot('r',0,"1CrossA",1)
+# s1.plot('b',0,"1CrossA")
 
 # plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
 
-# c2.plot('b',1,"2CrossA")
-# c3.plot('y',1,"3CrossA")
+c2.plot('b',0,"2CrossA",1)
+c3.plot('y',0,"3CrossA",1)
 plt.show()
 
 
@@ -166,6 +166,3 @@ plt.show()
 # # cyan		c	[0,1,1]
 # # magenta	m	[1,0,1]
 # # white		w	[1,1,1]
-
-# print("Lengte String: " + str(round((distanceHoek+distanceHoek_layer2+distanceHoek_layer3)*4/1000,2)) + "m")
-# print("Aantal Spijkers: " + str(Nspijkers*4-4))

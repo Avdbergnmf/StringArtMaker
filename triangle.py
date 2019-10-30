@@ -4,25 +4,43 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-blat = 30
+class Triangle:
+	def __init__(self,width,nails,thick):
+		self.width=width
+		self.nails=nails
+		self.thick=thick
 
-breedte = 445-blat #mm
-Nspijkers = 21 #mm
+		helft = breedte/2
+		hoogte = math.sqrt(3)*helft
 
-afstand = breedte/Nspijkers
+		self.x1 = np.linspace(0,breedte,nails)
+		self.y1 = np.zeros(nails)
+		self.x2 = np.linspace(breedte,helft,nails)
+		self.y2 = np.linspace(0,hoogte,nails)
+		self.x3 = np.linspace(helft,0,nails)
+		self.y3 = np.linspace(hoogte,0,nails)
 
-helft = breedte/2
-hoogte = math.sqrt(3)*helft
+		thickTop = np.sqrt(3)*blat/2
+		thickDiag = (blat/2)/np.tan(np.pi/6)
 
-x1 = np.linspace(0,breedte,Nspijkers) #+afstand om laatste punt mee te nemen
-y1 = np.zeros(Nspijkers)
-x2 = np.linspace(breedte,helft,Nspijkers)
-y2 = np.linspace(0,hoogte,Nspijkers)
-x3 = np.linspace(helft,0,Nspijkers)
-y3 = np.linspace(hoogte,0,Nspijkers)
+		self.xcontour1 = [-thickDiag,breedte+blat,helft,-thickDiag]
+		self.ycontour1 = [-thickDiag/2,-thickDiag/2,hoogte+thickTop,-thickDiag/2]
 
-Nshift = 5
-extra_Nshift = 15
+		self.xcontour2 = [thickDiag,breedte-thickDiag,helft,thickDiag]
+		self.ycontour2 = [thickDiag/2,thickDiag/2,hoogte-thickTop,thickDiag/2]
+		
+	def plotSquare(self):
+		plt.plot(self.x1,self.y1,'ko',linewidth=1)
+		plt.plot(self.x2,self.y2,'ko',linewidth=1)
+		plt.plot(self.x3,self.y3,'ko',linewidth=1)
+		
+		# outer contour
+		plt.plot(self.xcontour1,self.ycontour1,'k')
+		plt.plot(self.xcontour2,self.ycontour2,'k')
+
+		plt.axis([-self.thick/2,width+self.thick/2,-self.thick/2,self.width+self.thick/2])
+		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
+
 
 hoek1X = []
 hoek1Y = []
@@ -75,10 +93,7 @@ plt.plot(x2,y2,'ko')
 plt.plot(x3,y3,'ko')
 
 # outer contour
-latafstandboven = np.sqrt(3)*blat/2
-latafstandschuin = (blat/2)/np.tan(np.pi/6)
-plt.plot([-latafstandschuin,breedte+blat,helft,-latafstandschuin],[-latafstandschuin/2,-latafstandschuin/2,hoogte+latafstandboven,-latafstandschuin/2],'k')
-plt.plot([latafstandschuin,breedte-latafstandschuin,helft,latafstandschuin],[latafstandschuin/2,latafstandschuin/2,hoogte-latafstandboven,latafstandschuin/2],'k')
+
 
 
 plt.axis([-blat,breedte+blat,-blat,hoogte+blat])
