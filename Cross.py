@@ -49,8 +49,8 @@ class Curve(Cross):
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
 
-		self.curve1X = []
-		self.curve1Y = []
+		self.curveX = []
+		self.curveY = []
 		if(self.Nshift<0):
 			Nstart = -self.Nshift
 			Nend = 0
@@ -59,36 +59,36 @@ class Curve(Cross):
 			Nend = self.Nshift
 			
 		for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
-			self.curve1X.append(self.x1[i])
-			self.curve1Y.append(0)
+			self.curveX.append(self.x1[i])
+			self.curveY.append(0)
 
-			self.curve1X.append(0)
-			self.curve1Y.append(self.y2[self.nails-1-i-self.Nshift])
+			self.curveX.append(0)
+			self.curveY.append(self.y2[self.nails-1-i-self.Nshift])
 
-			self.curve1X.append(self.x3[i])
-			self.curve1Y.append(0)
+			self.curveX.append(self.x3[i])
+			self.curveY.append(0)
 
-			self.curve1X.append(0)
-			self.curve1Y.append(self.y4[self.nails-1-i-self.Nshift])
+			self.curveX.append(0)
+			self.curveY.append(self.y4[self.nails-1-i-self.Nshift])
 
-			self.curve1X.append(self.x1[i])
-			self.curve1Y.append(0)
+			self.curveX.append(self.x1[i])
+			self.curveY.append(0)
 
 			self.StringLengthThis = 0
-			for count in range(1,len(self.curve1X)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2)) 
+			for count in range(1,len(self.curveX)):
+				self.StringLengthThis += math.sqrt(math.pow(self.curveX[count]-self.curveX[count-1],2) + math.pow(self.curveX[count]-self.curveX[count-1],2)) 
 			# StringLength += self.StringLengthThis
 
 
-	def plot(self,color='b',makeTut=0,tutName="cross"):
-
-		for i in range(1,len(self.curve1X)):
-			plt.plot(self.curve1X[0:i],self.curve1Y[0:i],color,linewidth=1)
-			if(makeTut):
+	def plot(sself,color='b',makePic=0,tutName="Cross",makeGif=0):
+		if(makeGif):
+			for i in range(1,len(self.curve1X)+1):
+				plt.plot(self.curve1X[0:i],self.curve1Y[0:i],color,linewidth=1)
 				fig.savefig(tutName+str(i)+".png")
-		# plt.plot(self.curve1X,self.curve1Y,self.color,linewidth=1)
-		# if(makeTut):
-		# 	fig.savefig(tutName+".png")
+		else:
+			plt.plot(self.curve1X,self.curve1Y,color,linewidth=1)
+			if(makePic):
+				fig.savefig(tutName+".png")
 
 class Straight(Cross):
 	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
@@ -97,8 +97,8 @@ class Straight(Cross):
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
 
-		self.curve1X = []
-		self.curve1Y = []
+		self.straightX = []
+		self.straightY = []
 		if(self.Nshift>0):
 			Nstart = self.Nshift
 			Nend = 0
@@ -107,54 +107,48 @@ class Straight(Cross):
 			Nend = -self.Nshift
 			
 		for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
-			print(i)
-			print(Nend)
-			self.curve1X.append(self.x1[i])
-			self.curve1Y.append(0)
+			self.straightX.append(self.x1[i])
+			self.straightY.append(0)
 
-			self.curve1X.append(0)
-			self.curve1Y.append(self.y2[i-self.Nshift])
+			self.straightX.append(0)
+			self.straightY.append(self.y2[i-self.Nshift])
 
-			self.curve1X.append(self.x3[i])
-			self.curve1Y.append(0)
+			self.straightX.append(self.x3[i])
+			self.straightY.append(0)
 
-			self.curve1X.append(0)
-			self.curve1Y.append(self.y4[i-self.Nshift])
+			self.straightX.append(0)
+			self.straightY.append(self.y4[i-self.Nshift])
 
-			self.curve1X.append(self.x1[i])
-			self.curve1Y.append(0)
+			self.straightX.append(self.x1[i])
+			self.straightY.append(0)
 
 			self.StringLengthThis = 0
-			for count in range(1,len(self.curve1X)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2))
+			for count in range(1,len(self.straightX)):
+				self.StringLengthThis += math.sqrt(math.pow(self.straightX[count]-self.straightX[count-1],2) + math.pow(self.straightX[count]-self.straightX[count-1],2))
 			# StringLength += self.StringLengthThis
 
 
-	def plot(self,color='b',makeTut=0,tutName="cross"):
-
-		for i in range(1,len(self.curve1X)):
-			plt.plot(self.curve1X[0:i],self.curve1Y[0:i],color,linewidth=1)
-			if(makeTut):
+	def plot(self,color='b',makePic=0,tutName="Cross",makeGif=0):
+		if(makeGif):
+			for i in range(1,len(self.straightX)+1):
+				plt.plot(self.straightX[0:i],self.straightY[0:i],color,linewidth=1)
 				fig.savefig(tutName+str(i)+".png")
-		# plt.plot(self.curve1X,self.curve1Y,self.color,linewidth=1)
-		# if(makeTut):
-		# 	fig.savefig(tutName+".png")
-
-
-
-
+		else:
+			plt.plot(self.straightX,self.straightY,color,linewidth=1)
+			if(makePic):
+				fig.savefig(tutName+".png")
 
 
 c1 = Curve(500,16,38,-4,0,0)
 # c2 = Curve(500,13,38,-4,0,5)
 # c3 = Curve(500,13,38,5,0,0)
-s1 = Straight(500,16,38,5,0,0)
+s1 = Straight(500,16,38,0,11,0)
 
 
 fig = plt.figure()
 c1.plotCross()
-# c1.plot('r',0,"1CrossA")
-s1.plot('b',0,"1CrossA")
+# c1.plot('r',1,"1CrossA")
+s1.plot('b',1,"1CrossA")
 
 # plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
 
