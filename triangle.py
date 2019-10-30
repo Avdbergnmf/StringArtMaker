@@ -102,14 +102,86 @@ class Curve(Triangle):
 			if(makePic):
 				fig.savefig(tutName+".png")
 
-c1 = Curve(445,22,30,-6,0,0)
-c2 = Curve(445,22,30,11,0,0)
+class Straight(Triangle):
+	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0,parts=[1,1,1]):
+		super().__init__(width,nails,thick)
+		self.Nshift = Nshift
+		self.trimStart = trimStart
+		self.trimEnd = trimEnd
+
+		self.straight1X = []
+		self.straight1Y = []
+		self.straight2X = []
+		self.straight2Y = []
+		self.straight3X = []
+		self.straight3Y = []
+
+		if(self.Nshift<0):
+			Nstart = -self.Nshift
+			Nend = 0
+		else:
+			Nstart = 0
+			Nend = self.Nshift
+			
+		if(parts[0]):
+			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
+					self.straight1X.append(self.x1[i])
+					self.straight1Y.append(self.y1[i])
+					self.straight1X.append(self.x2[nails-1-i-Nshift])
+					self.straight1Y.append(self.y2[nails-1-i-Nshift])
+					if(nails-2-i-Nshift>=0):
+						self.straight1X.append(self.x2[nails-2-i-Nshift])
+						self.straight1Y.append(self.y2[nails-2-i-Nshift])
+		if(parts[1]):
+			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
+					self.straight2X.append(self.x2[i])
+					self.straight2Y.append(self.y2[i])
+					self.straight2X.append(self.x3[nails-1-i-Nshift])
+					self.straight2Y.append(self.y3[nails-1-i-Nshift])
+					if(nails-2-i-Nshift>=0):
+						self.straight2X.append(self.x3[nails-2-i-Nshift])
+						self.straight2Y.append(self.y3[nails-2-i-Nshift])
+
+		if(parts[2]):
+			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
+					self.straight3X.append(self.x3[i])
+					self.straight3Y.append(self.y3[i])
+					self.straight3X.append(self.x1[nails-1-i-Nshift])
+					self.straight3Y.append(self.y1[nails-1-i-Nshift])
+					if(nails-2-i-Nshift>=0):
+						self.straight3X.append(self.x1[nails-2-i-Nshift])
+						self.straight3Y.append(self.y1[nails-2-i-Nshift])
+
+	def plot(self,color='b',makePic=0,tutName="Square",makeGif=0):
+		if(makeGif):
+			for i in range(1,len(self.straight1X)+1):
+				plt.plot(self.straight1X[0:i],self.straight1Y[0:i],color,linewidth=1)
+				fig.savefig(tutName+"A"+str(i)+".png")
+			for i in range(1,len(self.straight2X)+1):
+				plt.plot(self.straight2X[0:i],self.straight2Y[0:i],color,linewidth=1)
+				fig.savefig(tutName+"B"+str(i)+".png")
+			for i in range(1,len(self.straight3X)+1):
+				plt.plot(self.straight3X[0:i],self.straight3Y[0:i],color,linewidth=1)
+				fig.savefig(tutName+"C"+str(i)+".png")
+
+		else:
+			plt.plot(self.straight1X,self.straight1Y,color,linewidth=1)
+			plt.plot(self.straight2X,self.straight2Y,color,linewidth=1)
+			plt.plot(self.straight3X,self.straight3Y,color,linewidth=1)
+			if(makePic):
+				fig.savefig(tutName+".png")
+
+s1 = Straight(445,22,30,0,0,18)
+c1 = Curve(445,22,30,11,0,0)
+
+# c2 = Curve(445,22,30,0,0,0,[0,1,0])
+# c3 = Curve(445,22,30,0,0,0,[0,0,1])
 
 fig = plt.figure()
 c1.plotTriangle()
-c1.plot('b',0,"A",1)
-c2.plot('r',1,"B",1)
-
+s1.plot('r')
+c1.plot('b',1,"A",0)
+# c2.plot('b',1,"A",0)
 
 plt.show()
 

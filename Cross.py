@@ -141,21 +141,25 @@ class Straight(Cross):
 				fig.savefig(tutName+".png")
 
 
-c1 = Curve(500,16,38,-4,0,0)
-c2 = Curve(500,13,38,-4,0,5)
-c3 = Curve(500,13,38,5,0,0)
-s1 = Straight(500,16,38,0,11,0)
+# c1 = Curve(500,16,38,-4,0,0)
+# c2 = Curve(500,13,38,-4,0,5)
+# c3 = Curve(500,13,38,5,0,0)
+s1 = Straight(500,13,38,0,8,0)
+s2 = Straight(500,13,38,0,0,7)
+c1 = Curve(500,13,38,0,3,3) 		
+# c2 = Curve(500,13,38,5,0,0) 
 
 
 fig = plt.figure()
 c1.plotCross()
-c1.plot('r',0,"1CrossA",1)
+c1.plot('b',0,"1CrossA",0)
 # s1.plot('b',0,"1CrossA")
 
 # plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
 
-c2.plot('b',0,"2CrossA",1)
-c3.plot('y',0,"3CrossA",1)
+s2.plot('g',0,"2CrossA",0)
+s1.plot('g',1,"C",0)
+# c2.plot('g',1,"D",0)
 plt.show()
 
 
