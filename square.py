@@ -78,6 +78,12 @@ class Xpatt(Square):
 			plt.plot(self.Xpatt2X,self.Xpatt2Y,color,linewidth=1)
 			if(makePic):
 				fig.savefig(tutName+".png")
+				
+def Curve(Square):
+	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
+		super().__init__(self,width,nails,thick)
+		
+
 
 Xp1 = Xpatt(500,22,30,17,0,0)
 Xp2 = Xpatt(500,22,30,-17,0,0)
