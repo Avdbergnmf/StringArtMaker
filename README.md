@@ -91,12 +91,26 @@ c1 = Curve(445,22,30,11,0,0)
 ```
 ![Triangle6](ExampleFigures/Triangle6.png)
 
+```python
+#Triangle7
+c1 = Curve(445,22,30,11,0,0)
+c2 = Curve(445,22,30,0,0,0)
+```
+![Triangle7](ExampleFigures/Triangle7.png)
+
+```python
+#Triangle8
+c1 = Curve(445,22,30,16,0,0)
+c2 = Curve(445,22,30,6,0,0)
+```
+![Triangle8](ExampleFigures/Triangle8.png)
+
 
 ### Squares
 
 ```python
 #Square3
-Xp1 = Xpatt(500,23,30,0,0,0,[1,1])
+Xp1 = Xpattern(500,23,30,0,0,0,[1,1])
 c1 = Curve(500,23,30,0,0,0)
 c2 = Curve(500,23,30,0,0,0)
 ```
@@ -112,19 +126,19 @@ c2 = Curve(500,23,30,0,0,0,[0,1,0,1])
 
 ```python
 #Square3
-c1 = Curve(500,22,30,17,0,0)
-c2 = Curve(500,22,30,12,0,5)
-c3 = Curve(500,22,30,7,0,10)
+c1 = Curve(500,22,30,0,17,0)
+c2 = Curve(500,22,30,0,12,5)
+c3 = Curve(500,22,30,0,7,10)
 c4 = Curve(500,22,30,0,0,15)
 ```
 ![Square3](ExampleFigures/Square3.png)
 
 ```python
 #Square4
-Xp1 = Xpatt(500,23,30,13,0,0,[1,0])
-Xp2 = Xpatt(500,23,30,-13,0,0,[0,1])
-Xp3 = Xpatt(500,23,30,0,0,13,[1,0])
-Xp4 = Xpatt(500,23,30,0,13,0,[0,1])
+Xp1 = Xpattern(500,23,30,13,0,0,[1,0])
+Xp2 = Xpattern(500,23,30,-13,0,0,[0,1])
+Xp3 = Xpattern(500,23,30,0,0,13,[1,0])
+Xp4 = Xpattern(500,23,30,0,13,0,[0,1])
 c1 = Curve(500,23,30,0,0,0)
 
 ```
@@ -139,7 +153,20 @@ c1 = Curve(500,23,30,0,0,0,[0,1,0,1])
 ```
 ![Square5](ExampleFigures/Square5.png)
 
+```python
+#Square6
+Xp1 = Xpattern(500,23,30,0,0,0,[1,0])
+c1 = Curve(500,23,30,0,0,0)
+c2 = Curve(500,23,30,0,10,10)
+```
+![Square6](ExampleFigures/Square6.png)
 
-
-
+```python
+#Square7
+c1 = Curve(500,23,30,0,0,0)
+c2 = Curve(500,23,30,-5,0,0)
+c3 = Curve(500,23,30,-13,0,0)
+c4 = Curve(500,23,30,13,0,0)
+```
+![Square7](ExampleFigures/Square7.png)
 

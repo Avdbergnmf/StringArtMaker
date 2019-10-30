@@ -41,7 +41,7 @@ class Square:
 		plt.axis([-self.width/2-self.thick,self.width/2+self.thick,-self.width/2-self.thick,self.width/2+self.thick])
 		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
-class Xpatt(Square):
+class Xpattern(Square):
 	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0,parts=[1,1]):
 		super().__init__(width,nails,thick)
 		self.parts = parts
@@ -167,23 +167,23 @@ class Curve(Square):
 		for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
 
 			if(self.parts[0]):
-				self.Curve1X.append(self.x1[i+Nshift])
-				self.Curve1Y.append(self.y1[i+Nshift])
+				self.Curve1X.append(self.x1[i])
+				self.Curve1Y.append(self.y1[i])
 				self.Curve1X.append(self.x2[i+Nshift])
 				self.Curve1Y.append(self.y2[i+Nshift])
 			if(self.parts[1]):
-				self.Curve2X.append(self.x2[i+Nshift])
-				self.Curve2Y.append(self.y2[i+Nshift])
+				self.Curve2X.append(self.x2[i])
+				self.Curve2Y.append(self.y2[i])
 				self.Curve2X.append(self.x3[i+Nshift])
 				self.Curve2Y.append(self.y3[i+Nshift])
 			if(self.parts[2]):
-				self.Curve3X.append(self.x3[i+Nshift])
-				self.Curve3Y.append(self.y3[i+Nshift])
+				self.Curve3X.append(self.x3[i])
+				self.Curve3Y.append(self.y3[i])
 				self.Curve3X.append(self.x4[i+Nshift])
 				self.Curve3Y.append(self.y4[i+Nshift])
 			if(self.parts[3]):
-				self.Curve4X.append(self.x4[i+Nshift])
-				self.Curve4Y.append(self.y4[i+Nshift])
+				self.Curve4X.append(self.x4[i])
+				self.Curve4Y.append(self.y4[i])
 				self.Curve4X.append(self.x1[i+Nshift])
 				self.Curve4Y.append(self.y1[i+Nshift])
 
@@ -220,18 +220,24 @@ class Curve(Square):
 				fig.savefig(tutName+".png")
 
 # Make plots
-z1 = Zigzag(500,23,30,0,0,0,[1,0])
-z2 = Zigzag(500,23,30,0,0,0,[0,1])
-c1 = Curve(500,23,30,0,0,0,[0,1,0,1])
+c1 = Curve(500,23,30,0,0,0)
+c2 = Curve(500,23,30,-5,0,0)
+c3 = Curve(500,23,30,-13,0,0)
+c4 = Curve(500,23,30,13,0,0)
+
 
 fig = plt.figure()
 
-z1.plotSquare()
-z1.plot('g')
-z2.plot('y')
-c1.plot('r',1)
+c1.plotSquare()
+c1.plot('r')
+c4.plot('y')
+c2.plot('b')
+c3.plot('m',1)
 
-print("Total string length: " + str(round((z1.StringLength+z2.StringLength+c1.StringLength)/1000,2)) + "m") # you need to add the used patterns yourself here
+
+
+
+# print("Total string length: " + str(round((z1.StringLength+z2.StringLength+c1.StringLength)/1000,2)) + "m") # you need to add the used patterns yourself here
 plt.show()
 
 # plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
