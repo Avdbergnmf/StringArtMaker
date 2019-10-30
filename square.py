@@ -93,53 +93,44 @@ class Zigzag(Square):
 		super().__init__(width,nails,thick)
 		self.StringLengthThis=0
 		self.parts = parts
-		self.Xpatt1X = []
-		self.Xpatt1Y = []
-		self.Xpatt2X = []
-		self.Xpatt2Y = []
+		self.zigzag1X = []
+		self.zigzag1Y = []
+		self.zigzag2X = []
+		self.zigzag2Y = []
 
 		if(Nshift<0):
 			Nstart = -Nshift
 			Nend = 0
 		else:
 			Nstart = 0
-			Nend = +Nshift
+			Nend = Nshift
 
-		for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
-			self.Xpatt1X.append(self.x1[i+Nshift])
-			self.Xpatt1Y.append(self.y1[i+Nshift])
-			self.Xpatt1X.append(self.x2[nails-i-Nshift])
-			self.Xpatt1Y.append(self.y2[nails-i-Nshift])
-		for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
-			self.Xpatt1X.append(self.x4[i+Nshift])
-			self.Xpatt1Y.append(self.y4[i+Nshift])
-			self.Xpatt1X.append(self.x3[nails-i-Nshift])
-			self.Xpatt1Y.append(self.y3[nails-i-Nshift])
+		if(parts[0]):
+			for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
+				self.zigzag1X.append(self.x1[i+Nshift])
+				self.zigzag1Y.append(self.y1[i+Nshift])
+				self.zigzag1X.append(self.x2[nails-1-i-Nshift])
+				self.zigzag1Y.append(self.y2[nails-1-i-Nshift])
+		if(parts[1]):
+			for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
+				self.zigzag2X.append(self.x4[i+Nshift])
+				self.zigzag2Y.append(self.y4[i+Nshift])
+				self.zigzag2X.append(self.x3[nails-1-i-Nshift])
+				self.zigzag2Y.append(self.y3[nails-1-i-Nshift])
 
 	def plot(self,color='b',makePic=0,tutName="Square",makeGif=0):
 		if(makeGif):
-			if(self.parts[0]):
-				for i in range(1,len(self.Xpatt1X)+1):
-					plt.plot(self.Xpatt1X[0:i],self.Xpatt1Y[0:i],color,linewidth=1)
-					fig.savefig(tutName+"A"+str(i)+".png")
-			if(self.parts[1]):
-				for i in range(1,len(self.Xpatt1X)+1):
-					plt.plot(self.Xpatt2X[0:i],self.Xpatt2Y[0:i],color,linewidth=1)
-					fig.savefig(tutName+"B"+str(i)+".png")		
+			for i in range(1,len(self.zigzag1X)+1):
+				plt.plot(self.zigzag1X[0:i],self.zigzag1Y[0:i],color,linewidth=1)
+				fig.savefig(tutName+"A"+str(i)+".png")
+			for i in range(1,len(self.zigzag1X)+1):
+				plt.plot(self.zigzag2X[0:i],self.zigzag2Y[0:i],color,linewidth=1)
+				fig.savefig(tutName+"B"+str(i)+".png")		
 		else:
-			if(self.parts[0]):
-				plt.plot(self.Xpatt1X,self.Xpatt1Y,color,linewidth=1)
-			if(self.parts[1]):
-				plt.plot(self.Xpatt2X,self.Xpatt2Y,color,linewidth=1)
+			plt.plot(self.zigzag1X,self.zigzag1Y,color,linewidth=1)
+			plt.plot(self.zigzag2X,self.zigzag2Y,color,linewidth=1)
 			if(makePic):
 				fig.savefig(tutName+".png")
-
-
-
-def Curve(Square):
-	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
-		super().__init__(self,width,nails,thick)
-		
 
 
 class Curve(Square):
@@ -217,10 +208,13 @@ class Curve(Square):
 
 
 
-Xp1 = Xpatt(500,22,30,13,0,0,[1,0])
-Xp2 = Xpatt(500,22,30,-13,0,0,[0,1])
-Xp3 = Xpatt(500,22,30,0,0,13,[1,0])
-Xp4 = Xpatt(500,22,30,0,13,0,[0,1])
+# Xp1 = Xpatt(500,22,30,13,0,0,[1,0])
+# Xp2 = Xpatt(500,22,30,-13,0,0,[0,1])
+# Xp3 = Xpatt(500,22,30,0,0,13,[1,0])
+# Xp4 = Xpatt(500,22,30,0,13,0,[0,1])
+
+z1 = Zigzag(500,22,30,0,0,0)
+
 c1 = Curve(500,22,30,17,0,0)
 c2 = Curve(500,22,30,12,0,5)
 c3 = Curve(500,22,30,7,0,10)
@@ -229,15 +223,17 @@ c4 = Curve(500,22,30,0,0,15)
 
 fig = plt.figure()
 
-c1.plotSquare()
+z1.plotSquare()
 # c1.plot('m',0,"A",1)
 # c2.plot('r',0,"B",1)
 # c3.plot('b',0,"C",1)
 # c4.plot('y',0,"D",1)
-Xp1.plot('b',0,"A",1)
-Xp2.plot('b',0,"B",1)
-Xp4.plot('r',0,"C",1)
-Xp3.plot('r',0,"D",1)
+# Xp1.plot('b',0,"A",1)
+# Xp2.plot('b',0,"B",1)
+# Xp4.plot('r',0,"C",1)
+# Xp3.plot('r',0,"D",1)
+
+z1.plot()
 
 
 plt.show()
