@@ -20,7 +20,8 @@ Remove pngs afterwards:
 
 ```python
 # CrossA
-c1 = Curve(500,13,38,-4,4,0,'r')
-c2 = Curve(500,13,38,-4,0,5,'b')
-c3 = Curve(500,13,38,5,0,0,'y')```
+c1 = Curve(500,13,38,-4,4,0) # plot in red
+c2 = Curve(500,13,38,-4,0,5) # plot in blue
+c3 = Curve(500,13,38,5,0,0) # plot in yellow
+```
 
