@@ -99,14 +99,16 @@ class Straight(Cross):
 
 		self.curve1X = []
 		self.curve1Y = []
-		if(self.Nshift<0):
-			Nstart = -self.Nshift
+		if(self.Nshift>0):
+			Nstart = self.Nshift
 			Nend = 0
 		else:
 			Nstart = 0
-			Nend = self.Nshift
+			Nend = -self.Nshift
 			
 		for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
+			print(i)
+			print(Nend)
 			self.curve1X.append(self.x1[i])
 			self.curve1Y.append(0)
 
@@ -146,12 +148,12 @@ class Straight(Cross):
 c1 = Curve(500,16,38,-4,0,0)
 # c2 = Curve(500,13,38,-4,0,5)
 # c3 = Curve(500,13,38,5,0,0)
-s1 = Straight(500,16,38,0,0,0)
+s1 = Straight(500,16,38,5,0,0)
 
 
 fig = plt.figure()
 c1.plotCross()
-c1.plot('r',0,"1CrossA")
+# c1.plot('r',0,"1CrossA")
 s1.plot('b',0,"1CrossA")
 
 # plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
