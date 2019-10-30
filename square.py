@@ -88,6 +88,54 @@ class Xpatt(Square):
 			if(makePic):
 				fig.savefig(tutName+".png")
 				
+class Zigzag(Square):
+	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0,parts=[1,1]):
+		super().__init__(width,nails,thick)
+		self.StringLengthThis=0
+		self.parts = parts
+		self.Xpatt1X = []
+		self.Xpatt1Y = []
+		self.Xpatt2X = []
+		self.Xpatt2Y = []
+
+		if(Nshift<0):
+			Nstart = -Nshift
+			Nend = 0
+		else:
+			Nstart = 0
+			Nend = +Nshift
+
+		for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
+			self.Xpatt1X.append(self.x1[i+Nshift])
+			self.Xpatt1Y.append(self.y1[i+Nshift])
+			self.Xpatt1X.append(self.x2[nails-i-Nshift])
+			self.Xpatt1Y.append(self.y2[nails-i-Nshift])
+		for i in range(Nstart+trimStart,self.nails-Nend-trimEnd):
+			self.Xpatt1X.append(self.x4[i+Nshift])
+			self.Xpatt1Y.append(self.y4[i+Nshift])
+			self.Xpatt1X.append(self.x3[nails-i-Nshift])
+			self.Xpatt1Y.append(self.y3[nails-i-Nshift])
+
+	def plot(self,color='b',makePic=0,tutName="Square",makeGif=0):
+		if(makeGif):
+			if(self.parts[0]):
+				for i in range(1,len(self.Xpatt1X)+1):
+					plt.plot(self.Xpatt1X[0:i],self.Xpatt1Y[0:i],color,linewidth=1)
+					fig.savefig(tutName+"A"+str(i)+".png")
+			if(self.parts[1]):
+				for i in range(1,len(self.Xpatt1X)+1):
+					plt.plot(self.Xpatt2X[0:i],self.Xpatt2Y[0:i],color,linewidth=1)
+					fig.savefig(tutName+"B"+str(i)+".png")		
+		else:
+			if(self.parts[0]):
+				plt.plot(self.Xpatt1X,self.Xpatt1Y,color,linewidth=1)
+			if(self.parts[1]):
+				plt.plot(self.Xpatt2X,self.Xpatt2Y,color,linewidth=1)
+			if(makePic):
+				fig.savefig(tutName+".png")
+
+
+
 def Curve(Square):
 	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
 		super().__init__(self,width,nails,thick)
