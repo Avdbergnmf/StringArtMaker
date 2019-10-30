@@ -42,8 +42,6 @@ class Cross:
 		plt.axis([-self.width/2-self.thick,self.width/2+self.thick,-self.width/2-self.thick,self.width/2+self.thick])
 		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
-patt1 = Cross(500, 11, 38)
-
 class Curve(Cross):
 	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0,color='b'):
 		super().__init__(width,nails,thick)
@@ -54,13 +52,6 @@ class Curve(Cross):
 
 		self.curve1X = []
 		self.curve1Y = []
-		self.curve2X = []
-		self.curve2Y = []
-		self.curve3X = []
-		self.curve3Y = []
-		self.curve4X = []
-		self.curve4Y = []
-
 		if(self.Nshift<0):
 			Nstart = -self.Nshift
 			Nend = 0
@@ -70,68 +61,48 @@ class Curve(Cross):
 			
 		for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
 			self.curve1X.append(self.x1[i])
-			self.curve1X.append(0)
-			self.curve1X.append(0)
-
 			self.curve1Y.append(0)
+
+			self.curve1X.append(0)
 			self.curve1Y.append(self.y2[self.nails-1-i-self.Nshift])
-			self.curve1Y.append(self.y2[self.nails-1-i-1-self.Nshift])
 
-			self.curve2X.append(self.x3[i])
-			self.curve2X.append(0)
-			self.curve2X.append(0)
+			self.curve1X.append(self.x3[i])
+			self.curve1Y.append(0)
 
-			self.curve2Y.append(0)
-			self.curve2Y.append(self.y2[self.nails-1-i-self.Nshift])
-			self.curve2Y.append(self.y2[self.nails-1-i-1-self.Nshift])
+			self.curve1X.append(0)
+			self.curve1Y.append(self.y4[self.nails-1-i-self.Nshift])
 
-			self.curve3X.append(self.x3[i])
-			self.curve3X.append(0)
-			self.curve3X.append(0)
-
-			self.curve3Y.append(0)
-			self.curve3Y.append(self.y4[self.nails-1-i-self.Nshift])
-			self.curve3Y.append(self.y4[self.nails-1-i-1-self.Nshift])
-
-			self.curve4X.append(self.x1[i])
-			self.curve4X.append(0)
-			self.curve4X.append(0)
-
-			self.curve4Y.append(0)
-			self.curve4Y.append(self.y4[self.nails-1-i-self.Nshift])
-			self.curve4Y.append(self.y4[self.nails-1-i-1-self.Nshift])
+			self.curve1X.append(self.x1[i])
+			self.curve1Y.append(0)
 
 			self.StringLengthThis = 0
 			for count in range(1,len(self.curve1X)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2))*4 # *4 cause 4 quadrants
+				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2)) # *4 cause 4 quadrants
 			# StringLength += self.StringLengthThis
 
 
 	def plotCurve(self,makeTut=0,tutName="cross"):
-		plt.plot(self.curve1X,self.curve1Y,self.color,linewidth=1)
-		if(makeTut):
-			fig.savefig(tutName+"1.png")
-		plt.plot(self.curve2X,self.curve2Y,self.color,linewidth=1)
-		if(makeTut):
-			fig.savefig(tutName+"2.png")
-		plt.plot(self.curve3X,self.curve3Y,self.color,linewidth=1)
-		if(makeTut):
-			fig.savefig(tutName+"3.png")
-		plt.plot(self.curve4X,self.curve4Y,self.color,linewidth=1)
-		if(makeTut):
-			fig.savefig(tutName+"4.png")
 
-c1 = Curve(500,13,38,-4,4,0,'r')
-c2 = Curve(500,13,38,-4,0,5,'b')
+		for i in range(1,len(self.curve1X)):
+			plt.plot(self.curve1X[0:i],self.curve1Y[0:i],self.color,linewidth=1)
+			if(makeTut):
+				fig.savefig(tutName+str(i)+".png")
+		# plt.plot(self.curve1X,self.curve1Y,self.color,linewidth=1)
+		# if(makeTut):
+		# 	fig.savefig(tutName+".png")
 
-c3 = Curve(500,13,38,5,0,0,'y')
+
+
+c1 = Curve(500,13,38,-4,0,0,'r')
+# c2 = Curve(500,13,38,-4,0,5,'b')
+# c3 = Curve(500,13,38,5,0,0,'y')
 
 
 fig = plt.figure()
 c1.plotCross()
-c1.plotCurve(1,"crossRed")
-c2.plotCurve(1,"CrossBlue")
-c3.plotCurve(1,"CrossMagenta")
+c1.plotCurve(1,"1CrossA")
+# c2.plotCurve(1,"2CrossA")
+# c3.plotCurve(1,"3CrossA")
 plt.show()
 
 
