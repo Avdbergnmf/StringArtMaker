@@ -40,6 +40,8 @@ class Cross:
 		plt.plot(self.x4,self.y4,'ko',linewidth=1)
 		plt.plot(self.xcontourplot,self.ycontourplot,'k-',linewidth=1)
 		plt.axis([-self.width/2-self.thick,self.width/2+self.thick,-self.width/2-self.thick,self.width/2+self.thick])
+		plt.ylabel("height [mm]")
+		plt.xlabel("width [mm]")
 		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 class Curve(Cross):

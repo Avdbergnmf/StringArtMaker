@@ -36,7 +36,8 @@ class Square:
 		# outer contour
 		plt.plot(self.xcontour1,self.ycontour1,'k')
 		plt.plot(self.xcontour2,self.ycontour2,'k')
-
+		plt.ylabel("height [mm]")
+		plt.xlabel("width [mm]")
 		plt.axis([-self.width/2-self.thick,self.width/2+self.thick,-self.width/2-self.thick,self.width/2+self.thick])
 		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
@@ -78,8 +79,7 @@ class Xpatt(Square):
 			if(self.parts[1]):
 				for i in range(1,len(self.Xpatt1X)+1):
 					plt.plot(self.Xpatt2X[0:i],self.Xpatt2Y[0:i],color,linewidth=1)
-					fig.savefig(tutName+"B"+str(i)+".png")
-				
+					fig.savefig(tutName+"B"+str(i)+".png")		
 		else:
 			if(self.parts[0]):
 				plt.plot(self.Xpatt1X,self.Xpatt1Y,color,linewidth=1)

@@ -13,7 +13,9 @@ Turn string of pictures into gif from command line:
 
 Remove pngs afterwards:
 
-```rm `ls -v|grep png```
+```
+rm `ls -v|grep png` 
+```
 
 ## Some examples
 ### Crosses
