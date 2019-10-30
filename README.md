@@ -2,9 +2,18 @@
 # StringArtMaker
 Make Stringart designs by modifying this code
 
-not exactly user-friendly but gives nice basis of ideas to start with
+Make sure to run with python3:
+`python3 filename.py`
 
-Just mess around with what to plot, along with the sizes, nailcount, colors and the Nshift values to get differ different shapes.
+Not the cleanest code but enough to get the job done!
+
+Just mess around with what multiple layers, sizes, nailcount, colors and the shift values to get differ different shapes. There are some examples underneath for inspiration.
+Syntax for creating an object, i.e. curve:
+```python
+c1 = Curve(width,nails,thick,Nshift=0,trimStart=0,trimEnd=0,parts=[1,1,1,1])
+c1.plot(color='b',makePic=0,tutName="Square",makeGif=0)
+```
+All optional except first three params. makePic saves a png of the frame after drawing that shape under name tutName. makeGif outputs every single frame when set to 1 so that a gif can be compiled (see below). Selectable colors are at bottom of every file, but script could easily be adjusted to select other colors, if you want that.
 
 ### Make GIFs
 Turn string of pictures into gif from command line:
