@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Test prog stringart triangle
 
 import matplotlib.pyplot as plt
@@ -15,7 +15,7 @@ class Cross:
 		self.nails=nails
 		self.thick=thick
 
-		NailCount = nails*4
+		NailCount = nails*4-3
 
 		self.nailwidth = width-thick
 
@@ -76,7 +76,7 @@ class Curve(Cross):
 
 			self.StringLengthThis = 0
 			for count in range(1,len(self.curve1X)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2)) # *4 cause 4 quadrants
+				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2)) 
 			# StringLength += self.StringLengthThis
 
 
@@ -126,7 +126,7 @@ class Straight(Cross):
 
 			self.StringLengthThis = 0
 			for count in range(1,len(self.curve1X)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2)) # *4 cause 4 quadrants
+				self.StringLengthThis += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1X[count]-self.curve1X[count-1],2))
 			# StringLength += self.StringLengthThis
 
 
@@ -163,183 +163,6 @@ s1.plot('b',0,"1CrossA")
 plt.show()
 
 
-
-# blat = 38
-
-# breedte = 500-blat #mm
-# Nspijkers = 20 #mm
-
-# afstand = breedte/Nspijkers
-
-# helft = breedte/2
-
-# x1 = np.linspace(0,helft,Nspijkers) # rechts
-# y1 = np.zeros(Nspijkers)
-# x2 = np.zeros(Nspijkers) # boven
-# y2 = np.linspace(0,helft,Nspijkers)
-# x3 = np.linspace(0,-helft,Nspijkers) # links
-# y3 = np.zeros(Nspijkers)
-# x4 = np.zeros(Nspijkers) # onder
-# y4 = np.linspace(0,-helft,Nspijkers)
-
-# Nshift = 5
-# Nshift2 = 5
-
-# layer2_Nshift = 0
-# layer2_Nshift2 = 15
-
-# layer3_Nshift = 10
-# layer3_Nshift2 = 0
-
-# straight_Nshift = 0
-# straight_Nshift2 = 10
-
-# hoek1X = []
-# hoek1Y = []
-# hoek2X = []
-# hoek2Y = []
-# hoek3X = []
-# hoek3Y = []
-# hoek4X = []
-# hoek4Y = []
-# for i in range(0,Nspijkers-Nshift2-Nshift):
-# 	hoek1X.append(x1[i+Nshift2])
-# 	hoek1X.append(0)
-# 	hoek1Y.append(0)
-# 	hoek1Y.append(y2[Nspijkers-1-i-Nshift])
-
-# 	hoek2X.append(0)
-# 	hoek2X.append(x3[Nspijkers-1-i-Nshift])
-# 	hoek2Y.append(y2[i+Nshift2])
-# 	hoek2Y.append(0)
-
-# 	hoek3X.append(x3[i+Nshift2])
-# 	hoek3X.append(0)
-# 	hoek3Y.append(0)
-# 	hoek3Y.append(y4[Nspijkers-1-i-Nshift])
-
-# 	hoek4X.append(0)
-# 	hoek4X.append(x1[Nspijkers-1-i-Nshift])
-# 	hoek4Y.append(y4[i+Nshift2])
-# 	hoek4Y.append(0)
-
-# layer2_hoek1X = []
-# layer2_hoek1Y = []
-# layer2_hoek2X = []
-# layer2_hoek2Y = []
-# layer2_hoek3X = []
-# layer2_hoek3Y = []
-# layer2_hoek4X = []
-# layer2_hoek4Y = []
-# for i in range(0,Nspijkers-layer2_Nshift2-layer2_Nshift):
-# 	layer2_hoek1X.append(x1[i+layer2_Nshift2])
-# 	layer2_hoek1X.append(0)
-# 	layer2_hoek1Y.append(0)
-# 	layer2_hoek1Y.append(y2[Nspijkers-1-i-layer2_Nshift])
-
-# 	layer2_hoek2X.append(0)
-# 	layer2_hoek2X.append(x3[Nspijkers-1-i-layer2_Nshift])
-# 	layer2_hoek2Y.append(y2[i+layer2_Nshift2])
-# 	layer2_hoek2Y.append(0)
-
-# 	layer2_hoek3X.append(x3[i+layer2_Nshift2])
-# 	layer2_hoek3X.append(0)
-# 	layer2_hoek3Y.append(0)
-# 	layer2_hoek3Y.append(y4[Nspijkers-1-i-layer2_Nshift])
-
-# 	layer2_hoek4X.append(0)
-# 	layer2_hoek4X.append(x1[Nspijkers-1-i-layer2_Nshift])
-# 	layer2_hoek4Y.append(y4[i+layer2_Nshift2])
-# 	layer2_hoek4Y.append(0)
-
-# layer3_hoek1X = []
-# layer3_hoek1Y = []
-# layer3_hoek2X = []
-# layer3_hoek2Y = []
-# layer3_hoek3X = []
-# layer3_hoek3Y = []
-# layer3_hoek4X = []
-# layer3_hoek4Y = []
-# for i in range(0,Nspijkers-layer3_Nshift2-layer3_Nshift):
-# 	layer3_hoek1X.append(x1[i+layer3_Nshift2])
-# 	layer3_hoek1X.append(0)
-# 	layer3_hoek1Y.append(0)
-# 	layer3_hoek1Y.append(y2[Nspijkers-1-i-layer3_Nshift])
-
-# 	layer3_hoek2X.append(0)
-# 	layer3_hoek2X.append(x3[Nspijkers-1-i-layer3_Nshift])
-# 	layer3_hoek2Y.append(y2[i+layer3_Nshift2])
-# 	layer3_hoek2Y.append(0)
-
-# 	layer3_hoek3X.append(x3[i+layer3_Nshift2])
-# 	layer3_hoek3X.append(0)
-# 	layer3_hoek3Y.append(0)
-# 	layer3_hoek3Y.append(y4[Nspijkers-1-i-layer3_Nshift])
-
-# 	layer3_hoek4X.append(0)
-# 	layer3_hoek4X.append(x1[Nspijkers-1-i-layer3_Nshift])
-# 	layer3_hoek4Y.append(y4[i+layer3_Nshift2])
-# 	layer3_hoek4Y.append(0)
-
-
-# straight_hoek1X = []
-# straight_hoek1Y = []
-# straight_hoek2X = []
-# straight_hoek2Y = []
-# straight_hoek3X = []
-# straight_hoek3Y = []
-# straight_hoek4X = []
-# straight_hoek4Y = []
-# for i in range(straight_Nshift,Nspijkers-straight_Nshift2):
-# 	straight_hoek1X.append(x1[i])
-# 	straight_hoek1X.append(0)
-# 	straight_hoek1Y.append(0)
-# 	straight_hoek1Y.append(y2[i])
-
-# 	straight_hoek2X.append(0)
-# 	straight_hoek2X.append(x3[i])
-# 	straight_hoek2Y.append(y2[i])
-# 	straight_hoek2Y.append(0)
-
-# 	straight_hoek3X.append(x3[i])
-# 	straight_hoek3X.append(0)
-# 	straight_hoek3Y.append(0)
-# 	straight_hoek3Y.append(y4[i])
-
-# 	straight_hoek4X.append(0)
-# 	straight_hoek4X.append(x1[i])
-# 	straight_hoek4Y.append(y4[i])
-# 	straight_hoek4Y.append(0)
-
-# fig = plt.figure()
-
-
-
-
-# #plot patterns
-# plt.plot(hoek1X,hoek1Y,'r-',linewidth=1.0)
-# plt.plot(hoek2X,hoek2Y,'r-',linewidth=1.0)
-# plt.plot(hoek3X,hoek3Y,'r-',linewidth=1.0)
-# plt.plot(hoek4X,hoek4Y,'r-',linewidth=1.0)
-
-# plt.plot(layer2_hoek1X,layer2_hoek1Y,'b-',linewidth=1.0)
-# plt.plot(layer2_hoek2X,layer2_hoek2Y,'b-',linewidth=1.0)
-# plt.plot(layer2_hoek3X,layer2_hoek3Y,'b-',linewidth=1.0)
-# plt.plot(layer2_hoek4X,layer2_hoek4Y,'b-',linewidth=1.0)
-
-# plt.plot(layer3_hoek1X,layer3_hoek1Y,'y-',linewidth=1.0)
-# plt.plot(layer3_hoek2X,layer3_hoek2Y,'y-',linewidth=1.0)
-# plt.plot(layer3_hoek3X,layer3_hoek3Y,'y-',linewidth=1.0)
-# plt.plot(layer3_hoek4X,layer3_hoek4Y,'y-',linewidth=1.0)
-
-# # plt.plot(straight_hoek1X,straight_hoek1Y,'y-')
-# # plt.plot(straight_hoek2X,straight_hoek2Y,'y-')
-# # plt.plot(straight_hoek3X,straight_hoek3Y,'y-')
-# # plt.plot(straight_hoek4X,straight_hoek4Y,'y-')
-
-# plt.show()
-# fig.savefig("cross1.png")
-
 # # COLORS
 # # blue		b	[0,0,1]
 # # black		k	[0,0,0]
@@ -349,27 +172,6 @@ plt.show()
 # # cyan		c	[0,1,1]
 # # magenta	m	[1,0,1]
 # # white		w	[1,1,1]
-
-# # Calculate distances
-# distanceHoek = 0
-# distanceHoek_layer2 = 0
-# distanceHoek_layer3 = 0
-# distanceHoek_straight = 0
-
-# for count in range(1,len(hoek1X)):
-# 	distanceHoek += math.sqrt(math.pow(hoek1X[count]-hoek1X[count-1],2) + math.pow(hoek1Y[count]-hoek1Y[count-1],2))
-	
-# for count in range(1,len(layer2_hoek1X)):
-# 	distanceHoek_layer2 += math.sqrt(math.pow(layer2_hoek1X[count]-layer2_hoek1X[count-1],2) + math.pow(layer2_hoek1Y[count]-layer2_hoek1Y[count-1],2))
-
-# for count in range(1,len(layer3_hoek1X)):
-# 	distanceHoek_layer3 += math.sqrt(math.pow(layer3_hoek1X[count]-layer3_hoek1X[count-1],2) + math.pow(layer3_hoek1Y[count]-layer3_hoek1Y[count-1],2))
-
-# # for count in range(1,len(straight_hoek1X)):
-# # 	distanceHoek_straight += math.sqrt(math.pow(straight_hoek1X[count]-straight_hoek1X[count-1],2) + math.pow(straight_hoek1Y[count]-straight_hoek1Y[count-1],2))
-
-# print ((distanceHoek+distanceHoek_layer2+distanceHoek_layer3)*4)
-
 
 # print("Lengte String: " + str(round((distanceHoek+distanceHoek_layer2+distanceHoek_layer3)*4/1000,2)) + "m")
 # print("Aantal Spijkers: " + str(Nspijkers*4-4))

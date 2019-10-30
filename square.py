@@ -4,6 +4,37 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
+class Square:
+	def __init__(self,width,nails,thick):
+		self.width=width
+		self.nails=nails
+		self.thick=thick
+		
+		nailwidth = width-thick
+		half = self.nailwidth/2
+		
+		self.x1 = np.linspace(-half,half,nails) # onder
+		self.y1 = np.ones(nails)*-half
+		self.x2 = np.ones(nails)*half# rechts
+		self.y2 = np.linspace(-half,half,nails)
+		self.x3 = np.linspace(half,-half,nails) # boven
+		self.y3 = np.ones(nails)*half
+		self.x4 = np.ones(nails)*-half # links
+		self.y4 = np.linspace(half,-half,nails)
+		
+		self.xcontour1 = []
+		self.ycontour1 = []
+		
+	def plotSquare():
+		plt.plot(self.x1,self.y1,'ko',linewidth=1)
+		plt.plot(self.x2,self.y2,'ko',linewidth=1)
+		plt.plot(self.x3,self.y3,'ko',linewidth=1)
+		plt.plot(self.x4,self.y4,'ko',linewidth=1)
+		
+		# outer contour
+plt.plot([-blat/2,breedte+blat/2,breedte+blat/2,-blat/2,-blat/2],[-blat/2,-blat/2,breedte+blat/2,breedte+blat/2,-blat/2],'k',linewidth=2.0,)
+plt.plot([blat/2,breedte-blat/2,breedte-blat/2,blat/2,blat/2],[blat/2,blat/2,breedte-blat/2,breedte-blat/2,blat/2],'k',linewidth=2.0,)
+
 blat = 30
 
 breedte = 450-blat #mm
@@ -167,9 +198,7 @@ plt.plot(np.zeros(len(y1)),y1,'ko')
 plt.plot(np.ones(len(y1))*breedte,y2,'ko')
 
 
-# outer contour
-plt.plot([-blat/2,breedte+blat/2,breedte+blat/2,-blat/2,-blat/2],[-blat/2,-blat/2,breedte+blat/2,breedte+blat/2,-blat/2],'k',linewidth=2.0,)
-plt.plot([blat/2,breedte-blat/2,breedte-blat/2,blat/2,blat/2],[blat/2,blat/2,breedte-blat/2,breedte-blat/2,blat/2],'k',linewidth=2.0,)
+
 
 plt.axis([-blat,breedte+blat,-blat,breedte+blat])
 plt.gca().set_aspect('equal', adjustable='box') # make axes equal
