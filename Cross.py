@@ -51,6 +51,8 @@ class Curve(Cross):
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
 
+		self.StringLength = 0
+
 		self.curveX = []
 		self.curveY = []
 		if(self.Nshift<0):
@@ -76,10 +78,9 @@ class Curve(Cross):
 			self.curveX.append(self.x1[i])
 			self.curveY.append(0)
 
-			self.StringLengthThis = 0
-			for count in range(1,len(self.curveX)):
-				self.StringLengthThis += math.sqrt(math.pow(self.curveX[count]-self.curveX[count-1],2) + math.pow(self.curveX[count]-self.curveX[count-1],2)) 
-			# StringLength += self.StringLengthThis
+			
+		for count in range(1,len(self.curveX)):
+			self.StringLength += math.sqrt(math.pow(self.curveX[count]-self.curveX[count-1],2) + math.pow(self.curveY[count]-self.curveY[count-1],2)) 
 
 
 	def plot(self,color='b',makePic=0,tutName="Cross",makeGif=0):
@@ -98,6 +99,8 @@ class Straight(Cross):
 		self.Nshift = Nshift
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
+
+		self.StringLength = 0
 
 		self.straightX = []
 		self.straightY = []
@@ -124,10 +127,8 @@ class Straight(Cross):
 			self.straightX.append(self.x1[i])
 			self.straightY.append(0)
 
-			self.StringLengthThis = 0
-			for count in range(1,len(self.straightX)):
-				self.StringLengthThis += math.sqrt(math.pow(self.straightX[count]-self.straightX[count-1],2) + math.pow(self.straightX[count]-self.straightX[count-1],2))
-			# StringLength += self.StringLengthThis
+		for count in range(1,len(self.straightX)):
+			self.StringLength += math.sqrt(math.pow(self.straightX[count]-self.straightX[count-1],2) + math.pow(self.straightY[count]-self.straightY[count-1],2))
 
 
 	def plot(self,color='b',makePic=0,tutName="Cross",makeGif=0):
@@ -141,34 +142,32 @@ class Straight(Cross):
 				fig.savefig(tutName+".png")
 
 
-# c1 = Curve(500,16,38,-4,0,0)
-# c2 = Curve(500,13,38,-4,0,5)
-# c3 = Curve(500,13,38,5,0,0)
+# Make Plots
 s1 = Straight(500,13,38,0,8,0)
 s2 = Straight(500,13,38,0,0,7)
 c1 = Curve(500,13,38,0,3,3) 		
-# c2 = Curve(500,13,38,5,0,0) 
 
 
 fig = plt.figure()
 c1.plotCross()
 c1.plot('b',0,"1CrossA",0)
-# s1.plot('b',0,"1CrossA")
-
-# plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
 
 s2.plot('g',0,"2CrossA",0)
 s1.plot('g',1,"C",0)
-# c2.plot('g',1,"D",0)
+
+
+print("Total string length: " + str(round((s1.StringLength+s2.StringLength+c1.StringLength)/1000,2)) + "m") # you need to add the used patterns yourself here
 plt.show()
 
 
-# # COLORS
-# # blue		b	[0,0,1]
-# # black		k	[0,0,0]
-# # red		r	[1,0,0]
-# # green		g	[0,1,0]
-# # yellow	y	[1,1,0]
-# # cyan		c	[0,1,1]
-# # magenta	m	[1,0,1]
-# # white		w	[1,1,1]
+# plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
+
+# COLORS
+# blue		b	[0,0,1]
+# black		k	[0,0,0]
+# red		r	[1,0,0]
+# green		g	[0,1,0]
+# yellow	y	[1,1,0]
+# cyan		c	[0,1,1]
+# magenta	m	[1,0,1]
+# white		w	[1,1,1]

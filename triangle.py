@@ -50,6 +50,8 @@ class Curve(Triangle):
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
 
+		self.StringLength = 0
+
 		self.curve1X = []
 		self.curve1Y = []
 		self.curve2X = []
@@ -70,18 +72,24 @@ class Curve(Triangle):
 					self.curve1X.append(self.x2[i+Nshift])
 					self.curve1Y.append(self.y1[i])
 					self.curve1Y.append(self.y2[i+Nshift])
+			for count in range(1,len(self.curve1X)):
+				self.StringLength += math.sqrt(math.pow(self.curve1X[count]-self.curve1X[count-1],2) + math.pow(self.curve1Y[count]-self.curve1Y[count-1],2))
 		if(parts[1]):
 			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
 					self.curve2X.append(self.x2[i])
 					self.curve2X.append(self.x3[i+Nshift])
 					self.curve2Y.append(self.y2[i])
 					self.curve2Y.append(self.y3[i+Nshift])
+			for count in range(1,len(self.curve2X)):
+				self.StringLength += math.sqrt(math.pow(self.curve2X[count]-self.curve2X[count-1],2) + math.pow(self.curve2Y[count]-self.curve2Y[count-1],2))
 		if(parts[2]):
 			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
 					self.curve3X.append(self.x3[i])
 					self.curve3X.append(self.x1[i+Nshift])
 					self.curve3Y.append(self.y3[i])
 					self.curve3Y.append(self.y1[i+Nshift])
+			for count in range(1,len(self.curve3X)):
+				self.StringLength += math.sqrt(math.pow(self.curve3X[count]-self.curve3X[count-1],2) + math.pow(self.curve3Y[count]-self.curve3Y[count-1],2))
 
 	def plot(self,color='b',makePic=0,tutName="Square",makeGif=0):
 		if(makeGif):
@@ -109,6 +117,8 @@ class Straight(Triangle):
 		self.trimStart = trimStart
 		self.trimEnd = trimEnd
 
+		self.StringLength = 0
+
 		self.straight1X = []
 		self.straight1Y = []
 		self.straight2X = []
@@ -132,6 +142,8 @@ class Straight(Triangle):
 					if(nails-2-i-Nshift>=0):
 						self.straight1X.append(self.x2[nails-2-i-Nshift])
 						self.straight1Y.append(self.y2[nails-2-i-Nshift])
+			for count in range(1,len(self.straight1X)):
+				self.StringLength += math.sqrt(math.pow(self.straight1X[count]-self.straight1X[count-1],2) + math.pow(self.straight1Y[count]-self.straight1Y[count-1],2))
 		if(parts[1]):
 			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
 					self.straight2X.append(self.x2[i])
@@ -141,6 +153,8 @@ class Straight(Triangle):
 					if(nails-2-i-Nshift>=0):
 						self.straight2X.append(self.x3[nails-2-i-Nshift])
 						self.straight2Y.append(self.y3[nails-2-i-Nshift])
+			for count in range(1,len(self.straight2X)):
+				self.StringLength += math.sqrt(math.pow(self.straight2X[count]-self.straight2X[count-1],2) + math.pow(self.straight2Y[count]-self.straight2Y[count-1],2))
 
 		if(parts[2]):
 			for i in range(Nstart+self.trimStart,self.nails-Nend-self.trimEnd):
@@ -151,6 +165,8 @@ class Straight(Triangle):
 					if(nails-2-i-Nshift>=0):
 						self.straight3X.append(self.x1[nails-2-i-Nshift])
 						self.straight3Y.append(self.y1[nails-2-i-Nshift])
+			for count in range(1,len(self.straight3X)):
+				self.StringLength += math.sqrt(math.pow(self.straight3X[count]-self.straight3X[count-1],2) + math.pow(self.straight3Y[count]-self.straight3Y[count-1],2))
 
 	def plot(self,color='b',makePic=0,tutName="Square",makeGif=0):
 		if(makeGif):
@@ -171,20 +187,20 @@ class Straight(Triangle):
 			if(makePic):
 				fig.savefig(tutName+".png")
 
+# Make Plots
 s1 = Straight(445,22,30,0,0,18)
 c1 = Curve(445,22,30,11,0,0)
-
-# c2 = Curve(445,22,30,0,0,0,[0,1,0])
-# c3 = Curve(445,22,30,0,0,0,[0,0,1])
 
 fig = plt.figure()
 c1.plotTriangle()
 s1.plot('r')
 c1.plot('b',1,"A",0)
-# c2.plot('b',1,"A",0)
 
+
+print("Total string length: " + str(round((s1.StringLength+c1.StringLength)/1000,2)) + "m") # you need to add the used patterns yourself here
 plt.show()
 
+# plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
 
 # COLORS
 # blue		b	[0,0,1]

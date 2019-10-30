@@ -9,11 +9,13 @@ Just mess around with what to plot, along with the sizes, nailcount, colors and 
 ### Make GIFs
 Turn string of pictures into gif from command line:
 
-```convert -delay 20 -loop 0 `ls -v|grep png` gifName.gif```
+```sh
+convert -delay 20 -loop 0 `ls -v|grep png` gifName.gif
+```
 
 Remove pngs afterwards:
 
-```
+```sh
 rm `ls -v|grep png` 
 ```
 
