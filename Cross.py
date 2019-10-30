@@ -43,7 +43,7 @@ class Cross:
 		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 class Curve(Cross):
-	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0:
+	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
 		super().__init__(width,nails,thick)
 		self.Nshift = Nshift
 		self.trimStart = trimStart
@@ -129,7 +129,7 @@ class Straight(Cross):
 
 
 	def plot(self,color='b',makeTut=0,tutName="cross"):
-		
+
 		for i in range(1,len(self.curve1X)):
 			plt.plot(self.curve1X[0:i],self.curve1Y[0:i],color,linewidth=1)
 			if(makeTut):
