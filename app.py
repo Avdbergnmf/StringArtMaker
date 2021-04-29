@@ -1,6 +1,5 @@
 import plotly.express as px  # (version 4.7.0)
 import plotly.graph_objects as go
-import pandas as pd
 import numpy as np
 import math
 
