@@ -111,14 +111,14 @@ class StringArtShape:
 			self.nails[:,:,i] = [np.linspace(nail_corners[i,0],nail_corners[i+1,0],self.n_nails), 	
 								 np.linspace(nail_corners[i,1],nail_corners[i+1,1],self.n_nails)]
 
-	def gen_inverted_nails(self,nail_corners):
-		self.n_sides = len(nail_corners)/2
+	def gen_inverted_nails(self,nail_corners,center):
+		self.n_sides = len(nail_corners)
 		self.nails = np.zeros((self.n_dim,self.n_nails,self.n_sides))
 		
 		# Create nails
 		for i in range(self.n_sides):
-			self.nails[:,:,i] = [np.linspace(nail_corners[i,0],nail_corners[i+1,0],self.n_nails), 	
-								 np.linspace(nail_corners[i,1],nail_corners[i+1,1],self.n_nails)]
+			self.nails[:,:,i] = [np.linspace(center[0],nail_corners[i,0],self.n_nails), 	
+								 np.linspace(center[1],nail_corners[i,1],self.n_nails)]
 
 class Square(StringArtShape):
 	def __init__(self,width,n_nails,thick):
@@ -275,26 +275,38 @@ class Triangle(StringArtShape):
 
 class Cross(StringArtShape):
 	def __init__(self,width,n_nails,thick):
-		n_nails = n_nails*4-3
-
 		super().__init__(width,n_nails,thick)
+
+		half = width/2
+
 		self.shape_methods = {
 			"curve": self.curve,
 			"straight": self.straight
 		}
 
-		half = width/2
-		self.height = math.sqrt(3)*half
-
 		# Define corners
 		nail_corners = np.array([
-			[-half, -self.height/2], 	# bottom left
-			[half,  -self.height/2]  	# bottom right
+			[-half, 0], 	# left
+			[0, half], 		# top
+			[half, 0], 		# right
+			[0, -half], 	# left
 		])
 
-		self.gen_nails(nail_corners)
-		
-	def curve(self,fig,style_dict):
+		center = [0,0]
+
+		self.gen_inverted_nails(nail_corners,center)
+
+		T = thick/2
+		W = width/2
+
+		self.outer_contour = np.array([
+			[T,W+T,W+T,T,T,-T,-T,-W-T,-W-T,-T,-T,T,T],
+			[T,T,-T,-T,-W-T,-W-T,-T,-T,T,T,W+T,W+T,T]
+		])
+
+		self.inner_contour = np.zeros_like(self.outer_contour)
+
+	def straight(self,fig,style_dict):
 		Nshift = style_dict['Nshift']
 		layer_pattern = np.array([
 			[0,0],
@@ -309,7 +321,7 @@ class Cross(StringArtShape):
 		fig = self.layer_shape(fig,style_dict,shape_dict)
 		return fig
 
-	def straight(self,fig,style_dict):
+	def curve(self,fig,style_dict):
 		Nshift = style_dict['Nshift']
 		
 		layer_pattern = np.array([

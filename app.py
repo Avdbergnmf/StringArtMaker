@@ -9,7 +9,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State, ALL
 
-from StringArtShapes import Triangle, Square
+from StringArtShapes import Triangle, Square, Cross
 
 # TODO
 # Add Cross
@@ -72,6 +72,8 @@ app.layout = html.Div([
     ],style={'display': 'flex', 'justifyContent': 'center'}),
 
     html.P('Add layers and adjust them to create a piece of string art.'),
+    dcc.Link('Source Code',href='https://github.com/Avdbergnmf/StringArtMaker/tree/WebApp', style={'text-align': 'center', 'font-size': 10}),
+    html.Br(),
     html.Div([
         html.Button("Add Layer", id="add-layer", n_clicks=1),
         html.Button("Reset StringArt", id="reset",n_clicks=0),
@@ -254,7 +256,7 @@ def update_plot(layer_dropdown, color_picker, nshift_slider, trim_slider, sectio
 			'trimEnd' 		: in_nails-trim_slider[i][1],
 			'parts' 		: section_selector[i]
 		}
-        fig = getattr(shape, layer_dropdown[i])(fig,style_dict)
+        fig = shape.shape_methods[layer_dropdown[i]](fig,style_dict)
 
     fig["layout"]= go.Layout(margin=dict(t=10,l=10,r=10,b=10), height=800, width=800, 
         paper_bgcolor='rgba(0,0,0,0)', font_color="#D5D5D5",font_size=20
@@ -270,7 +272,7 @@ def get_shape(slct_shape,in_width,in_nails,in_thick):
     elif slct_shape == 'S':
         shape = Square(in_width,in_nails,in_thick)
     elif slct_shape == 'C':
-        shape = Triangle(in_width,in_nails,in_thick)
+        shape = Cross(in_width,in_nails,in_thick)
     else:
         shape = None
     return shape
