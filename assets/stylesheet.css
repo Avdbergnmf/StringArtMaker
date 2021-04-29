@@ -1,6 +1,6 @@
 
 body {
-    background-color: #111111;
+    background-color: #272822;
     color: #D5D5D5;
    }
 h1 {
@@ -11,7 +11,7 @@ p {
 }
 
 .tab-content {
-    color : #111111;
+    color : #272822;
     padding : 5px 15px;
     background-color: #ffffff;
     /* font: #111111; */

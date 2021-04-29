@@ -33,16 +33,6 @@ class Cross:
 		self.xcontourplot = [thick/2,width/2,width/2,thick/2,thick/2,-thick/2,-thick/2,-width/2,-width/2,-thick/2,-thick/2,thick/2,thick/2]
 		self.ycontourplot = [thick/2,thick/2,-thick/2,-thick/2,-width/2,-width/2,-thick/2,-thick/2,thick/2,thick/2,width/2,width/2,thick/2]
 
-	def plotCross(self):
-		plt.plot(self.x1,self.y1,'ko',linewidth=1)
-		plt.plot(self.x2,self.y2,'ko',linewidth=1)
-		plt.plot(self.x3,self.y3,'ko',linewidth=1)
-		plt.plot(self.x4,self.y4,'ko',linewidth=1)
-		plt.plot(self.xcontourplot,self.ycontourplot,'k-',linewidth=1)
-		plt.axis([-self.width/2-self.thick,self.width/2+self.thick,-self.width/2-self.thick,self.width/2+self.thick])
-		plt.ylabel("height [mm]")
-		plt.xlabel("width [mm]")
-		plt.gca().set_aspect('equal', adjustable='box') # make axes equal
 
 class Curve(Cross):
 	def __init__(self,width,nails,thick,Nshift=0,trimStart=0,trimEnd=0):
@@ -140,34 +130,3 @@ class Straight(Cross):
 			plt.plot(self.straightX,self.straightY,color,linewidth=1)
 			if(makePic):
 				fig.savefig(tutName+".png")
-
-
-# Make Plots
-s1 = Straight(500,13,38,0,8,0)
-s2 = Straight(500,13,38,0,0,7)
-c1 = Curve(500,13,38,0,3,3) 		
-
-
-fig = plt.figure()
-c1.plotCross()
-c1.plot('b',0,"1CrossA",0)
-
-s2.plot('g',0,"2CrossA",0)
-s1.plot('g',1,"C",0)
-
-
-print("Total string length: " + str(round((s1.StringLength+s2.StringLength+c1.StringLength)/1000,2)) + "m") # you need to add the used patterns yourself here
-plt.show()
-
-
-# plt.clf() # To clear figure (but leaves axes) -> need to replot cross though!
-
-# COLORS
-# blue		b	[0,0,1]
-# black		k	[0,0,0]
-# red		r	[1,0,0]
-# green		g	[0,1,0]
-# yellow	y	[1,1,0]
-# cyan		c	[0,1,1]
-# magenta	m	[1,0,1]
-# white		w	[1,1,1]

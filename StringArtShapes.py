@@ -71,9 +71,9 @@ class StringArtShape:
 				for i in plotRange:
 					x_index = int(nail_multiplier[j][0]) * i + p[j][0]
 					y_index = int(nail_multiplier[j][1]) * i + p[j][1]
-					
+
 					if x_index in range(len(self.nails[0,:,side])) and y_index in range(len(self.nails[1,:,side])):
-						data[:, lines_per_step*i+j,	part] = [self.nails[0, x_index, side],	self.nails[1, y_index, side]]
+						data[:, lines_per_step*(i-plotRange[0])+j,	part] = [self.nails[0, x_index, side],	self.nails[1, y_index, side]]
 
 				#self.StringLength += self.string_length(data[:, 2*i, part], data[:, 2*i+1, part])
 			fig = self.add_lines(fig,data[:, :, part],plotLineStyle)
@@ -97,23 +97,40 @@ class StringArtShape:
 			Nend = 0
 		else:
 			Nstart = 0
-			Nend = +Nshift
+			Nend = Nshift
 		plotRange = range(Nstart+trimStart,self.n_nails-Nend-trimEnd)
 		return plotRange
 
-	def getnParts(self,n_corners): # How many distinct parts can we plot? based on the number of corners
-		return math.floor(n_corners/2) + n_corners % 2
+	def gen_nails(self,nail_corners):
+		n_corners = len(nail_corners)
+		self.n_sides = n_corners-1
+		self.nails = np.zeros((self.n_dim,self.n_nails,self.n_sides))
+		
+		# Create nails
+		for i in range(self.n_sides):
+			self.nails[:,:,i] = [np.linspace(nail_corners[i,0],nail_corners[i+1,0],self.n_nails), 	
+								 np.linspace(nail_corners[i,1],nail_corners[i+1,1],self.n_nails)]
+
+	def gen_inverted_nails(self,nail_corners):
+		self.n_sides = len(nail_corners)/2
+		self.nails = np.zeros((self.n_dim,self.n_nails,self.n_sides))
+		
+		# Create nails
+		for i in range(self.n_sides):
+			self.nails[:,:,i] = [np.linspace(nail_corners[i,0],nail_corners[i+1,0],self.n_nails), 	
+								 np.linspace(nail_corners[i,1],nail_corners[i+1,1],self.n_nails)]
 
 class Square(StringArtShape):
 	def __init__(self,width,n_nails,thick):
 		super().__init__(width,n_nails,thick)
-		half = width/2
 
 		self.shape_methods = {
+			"curve": self.curve,
 			"cross": self.cross,
-			"zigzag": self.zigzag,
-			"curve": self.curve
+			"zigzag": self.zigzag
 		}
+
+		half = width/2
 
 		# Define corners
 		nail_corners = np.array([
@@ -124,22 +141,18 @@ class Square(StringArtShape):
 			[-half, -half],  # top left
 		])
 
-		n_corners = len(nail_corners)
-		self.n_sides = n_corners-1
-		self.n_parts = self.getnParts(n_corners)
-		self.nails = np.zeros((self.n_dim,n_nails,self.n_sides))
-		
-		# Create nails
-		for i in range(self.n_sides):
-			self.nails[:,:,i] = [np.linspace(nail_corners[i,0],nail_corners[i+1,0],n_nails), 	
-								 np.linspace(nail_corners[i,1],nail_corners[i+1,1],n_nails)]
+		self.gen_nails(nail_corners)
 
 		# Create contour
-		dist_pos = half+self.thick/2
-		dist_neg = half-self.thick/2
-		self.inner_contour = np.array([[-dist_pos,dist_pos,dist_pos,-dist_pos,-dist_pos],[-dist_pos,-dist_pos,dist_pos,dist_pos,-dist_pos]])
-		self.outer_contour = np.array([[-dist_neg,dist_neg,dist_neg,-dist_neg,-dist_neg],[-dist_neg,-dist_neg,dist_neg,dist_neg,-dist_neg]])
-	
+		self.inner_contour = np.array(
+			[ [nail_corners[i,0]+np.sign(nail_corners[i,0])*self.thick/2 for i in range(len(nail_corners))],
+			[nail_corners[i,1]+np.sign(nail_corners[i,1])*self.thick/2 for i in range(len(nail_corners))] ]  
+		)
+		self.outer_contour = np.array(
+			[ [nail_corners[i,0]-np.sign(nail_corners[i,0])*self.thick/2 for i in range(len(nail_corners))],
+			[nail_corners[i,1]-np.sign(nail_corners[i,1])*self.thick/2 for i in range(len(nail_corners))] ]  
+		)
+
 	def cross(self,fig,style_dict):
 		Nshift = style_dict['Nshift']
 		layer_pattern = np.array([
@@ -158,11 +171,16 @@ class Square(StringArtShape):
 		Nshift = style_dict['Nshift']
 		layer_pattern = np.array([
 			[Nshift,Nshift],
-			[Nshift,Nshift]
+			[self.n_nails-1-Nshift,self.n_nails-1-Nshift]
+		])
+		nail_multiplier = np.array([
+			[ 1, 1],
+			[-1,-1]
 		])
 		shape_dict = {
 			'layer_pattern' : layer_pattern,
-			'side_shift' 	: [0,2]
+			'side_shift' 	: [0,1],
+			'nail_multiplier': nail_multiplier
 		}
 
 		fig = self.layer_shape(fig,style_dict,shape_dict)
@@ -186,27 +204,96 @@ class Triangle(StringArtShape):
 	def __init__(self,width,n_nails,thick):
 		super().__init__(width,n_nails,thick)
 		self.shape_methods = {
-			"straight": self.straight,
-			"curve": self.curve
+			"curve": self.curve,
+			"straight": self.straight
 		}
 
 		half = width/2
 		self.height = math.sqrt(3)*half
 
-		self.n_sides = 3 	# 3 sides for a triangle
-		self.nails = np.zeros((self.n_dim,n_nails,self.n_sides))
+		# Define corners
+		nail_corners = np.array([
+			[-half, -self.height/2], 	# bottom left
+			[half,  -self.height/2],  	# bottom right
+			[0,   self.height/2],  		# top
+			[-half, -self.height/2], 	# bottom left
+		])
 
-		# Create nails positions
-		self.nails[:,:,0] = [np.linspace(0,width,n_nails), 		np.zeros(n_nails)]
-		self.nails[:,:,1] = [np.linspace(width,half,n_nails), 	np.linspace(0,self.height,n_nails)]
-		self.nails[:,:,2] = [np.linspace(half,0,n_nails), 		np.linspace(self.height,0,n_nails)]
-		
+		self.gen_nails(nail_corners)
+
 		# Create contour plot
 		thickTop = np.sqrt(3)*thick/2
 		thickDiag = (thick/2)/np.tan(np.pi/6)
-		self.inner_contour = np.array([[-thickDiag,width+thick,half,-thickDiag], [-thickDiag/2,-thickDiag/2,self.height+thickTop,-thickDiag/2]])
-		self.outer_contour = np.array([[thickDiag,width-thickDiag,half,thickDiag], [thickDiag/2,thickDiag/2,self.height-thickTop,thickDiag/2]])
+		thickX = [thickDiag,thickDiag,0,thickDiag]
+		thickY = [thickDiag/2,thickDiag/2,thickTop,thickDiag/2]
 
+		self.inner_contour = np.array(
+			[ [nail_corners[i,0]+np.sign(nail_corners[i,0])*thickX[i] for i in range(len(nail_corners))],
+			[nail_corners[i,1]+np.sign(nail_corners[i,1])*thickY[i] for i in range(len(nail_corners))] ]  
+		)
+		self.outer_contour = np.array(
+			[ [nail_corners[i,0]-np.sign(nail_corners[i,0])*thickX[i] for i in range(len(nail_corners))],
+			[nail_corners[i,1]-np.sign(nail_corners[i,1])*thickY[i] for i in range(len(nail_corners))] ]  
+		)
+
+	def curve(self,fig,style_dict):
+		Nshift = style_dict['Nshift']
+		layer_pattern = np.array([
+			[0,0],
+			[Nshift,Nshift]
+		])
+
+		shape_dict = {
+			'layer_pattern' : layer_pattern,
+			'side_shift' 	: [0,1]
+		}
+
+		fig = self.layer_shape(fig,style_dict,shape_dict)
+		return fig
+
+	def straight(self,fig,style_dict):
+		Nshift = style_dict['Nshift']
+		
+		layer_pattern = np.array([
+			[0,0],
+			[self.n_nails-1-Nshift,self.n_nails-1-Nshift],
+			[self.n_nails-2-Nshift,self.n_nails-2-Nshift]
+		])
+		nail_multiplier = np.array([
+			[ 1, 1],
+			[-1,-1],
+			[-1,-1]
+		])
+		shape_dict = {
+			'layer_pattern'  : layer_pattern,
+			'side_shift' 	 : [0,1,1],
+			'nail_multiplier': nail_multiplier
+		}
+
+		fig = self.layer_shape(fig,style_dict,shape_dict)
+		return fig
+
+class Cross(StringArtShape):
+	def __init__(self,width,n_nails,thick):
+		n_nails = n_nails*4-3
+
+		super().__init__(width,n_nails,thick)
+		self.shape_methods = {
+			"curve": self.curve,
+			"straight": self.straight
+		}
+
+		half = width/2
+		self.height = math.sqrt(3)*half
+
+		# Define corners
+		nail_corners = np.array([
+			[-half, -self.height/2], 	# bottom left
+			[half,  -self.height/2]  	# bottom right
+		])
+
+		self.gen_nails(nail_corners)
+		
 	def curve(self,fig,style_dict):
 		Nshift = style_dict['Nshift']
 		layer_pattern = np.array([

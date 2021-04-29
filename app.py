@@ -12,16 +12,11 @@ from dash.dependencies import Input, Output, State, ALL
 
 from StringArtShapes import Triangle, Square
 
-# pip install dash dash_daq ipywidgets
-
-# Helper Methods
 # TODO
-# Add Cross & Fix Square
+# Add Cross
 # Upload & Deploy somewhere online
-# Cool default artwork
-# Fix start trim
-# Fix neg nshift
-# Animation button
+# Animation button https://plotly.com/python/animations/
+# Bug: When changing the number of nails, the sliders of the layers should update...
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -72,13 +67,17 @@ app.layout = html.Div([
             dcc.Input(id="in_nails",
                 placeholder='Number of nails per side...',
                 type='number',
-                value=10
+                value=30
             )
         ])
     ],style={'display': 'flex', 'justifyContent': 'center'}),
 
     html.P('Add layers and adjust them to create a piece of string art.'),
-    html.Button("Add Layer", id="add-layer", n_clicks=1),
+    html.Div([
+        html.Button("Add Layer", id="add-layer", n_clicks=1),
+        html.Button("Reset StringArt", id="reset",n_clicks=0),
+    ],style = {'display': 'inline-block'}),
+    
 
     html.Br(),
     dcc.Tabs(id='layer-tabs',children=[], value=''),
@@ -99,20 +98,31 @@ app.layout = html.Div([
 )
 
 # Callback--------------------------------------------------------------------------
+def reset_layers():
+    children = []
+    n_clicks = 1
+    curr_layer = 0
+    return children, n_clicks, 'tab-'+str(curr_layer)
+
 @app.callback(
     [Output('layer-tabs', 'children'),
     Output('add-layer','n_clicks'),
     Output('layer-tabs','value')],
 
     [Input('add-layer', 'n_clicks'),
+    Input('reset','n_clicks'),
     Input(component_id='slct_shape', component_property='value')],
 
     [State('layer-tabs', 'children'),
     State('layer-tabs', 'value'),
     State('in_nails', 'value')]
 )
-def display_layers(n_clicks,slct_shape, children, selected_tab, n_nails):
+def display_layers(n_clicks,_,slct_shape, children, selected_tab, n_nails):
+    print(dash.callback_context.triggered[0]['prop_id'].split('.')[0])
     if dash.callback_context.triggered[0]['prop_id'].split('.')[0] == 'slct_shape':
+        children = []
+        n_clicks = 1
+    if dash.callback_context.triggered[0]['prop_id'].split('.')[0] == 'reset':
         children = []
         n_clicks = 1
 
@@ -121,7 +131,6 @@ def display_layers(n_clicks,slct_shape, children, selected_tab, n_nails):
     new_layer = new_layer_tab(n_nails, shape, n_clicks)
 
     children.append(new_layer)
-    print(selected_tab)
 
     return children, n_clicks, 'tab-'+str(len(children))
 
@@ -169,7 +178,7 @@ def new_layer_tab(n_nails,shape,n_clicks):
                             'index': n_clicks
                         },
                         label='Layer Color',
-                        value=dict(hex='#119DFF'),
+                        value=dict(hex='#FFA200'),
                         size=200
                     )],style={'width': '40%', 'display': 'inline-block'}
                 ),
@@ -184,33 +193,33 @@ def new_layer_tab(n_nails,shape,n_clicks):
                         max=max_slider,
                         step=1,
                         value=0,
-                        marks={i-max_slider: str(i-max_slider) for i in range(2*max_slider+1)}
+                        marks={i: str(i) for i in range(-max_slider,max_slider+1,max([int(max_slider/10),1]))}
                     ),
-                    html.P('trim off starting string', style={'color' : '#111111'}),
-                    dcc.Slider(
+                    html.P('Trim off beginning & end of string', style={'color' : '#111111'}),
+                    dcc.RangeSlider(
                         id={
-                            'type': 'trim-start-slider',
+                            'type': 'trim-slider',
                             'index': n_clicks
                         },
                         min=0,
                         max=max_slider,
                         step=1,
-                        value=0,
-                        marks={i: str(i) for i in range(max_slider+1)}
-                    ),
-                    html.P('trim off end string', style={'color' : '#111111'}),
-                    dcc.Slider(
-                        id={
-                            'type': 'trim-end-slider',
-                            'index': n_clicks
-                        },
-                        min=0,
-                        max=max_slider,
-                        step=1,
-                        value=0,
-                        marks={i: str(i) for i in range(max_slider+1)}
+                        value=[0,max_slider],
+                        marks={i: str(i) for i in range(0,max_slider+1)}
                     )
-                    ],style={'width': '30%', 'display': 'inline-block'})
+                    # html.P('trim off end string', style={'color' : '#111111'}),
+                    # dcc.Slider(
+                    #     id={
+                    #         'type': 'trim-end-slider',
+                    #         'index': n_clicks
+                    #     },
+                    #     min=0,
+                    #     max=max_slider,
+                    #     step=1,
+                    #     value=0,
+                    #     marks={i: str(i) for i in range(max_slider+1)}
+                    # )
+                    ],style={'width': '40%', 'display': 'inline-block'})
                 ]),
                 html.Br()
         ], className="tab-content" #style={'justifyContent': 'center','display': 'flex'}
@@ -223,8 +232,8 @@ def new_layer_tab(n_nails,shape,n_clicks):
     [Input({'type': 'layer-dropdown', 'index': ALL}, 'value'),
     Input({'type': 'color-picker', 'index': ALL}, 'value'),
     Input({'type': 'nshift-slider', 'index': ALL}, 'value'),
-    Input({'type': 'trim-start-slider', 'index': ALL}, 'value'),
-    Input({'type': 'trim-end-slider', 'index': ALL}, 'value'),
+    Input({'type': 'trim-slider', 'index': ALL}, 'value'),
+    # Input({'type': 'trim-end-slider', 'index': ALL}, 'value'),
     Input({'type': 'section-selector', 'index': ALL}, 'value'),
     Input(component_id='in_width', component_property='value'),
     Input(component_id='in_nails', component_property='value'),
@@ -234,7 +243,7 @@ def new_layer_tab(n_nails,shape,n_clicks):
     State(component_id='slct_shape', component_property='value')
 )
 
-def update_plot(layer_dropdown, color_picker, nshift_slider, trim_start_slider, trim_end_slider, section_selector, in_width, in_nails, in_thick, slct_shape):
+def update_plot(layer_dropdown, color_picker, nshift_slider, trim_slider, section_selector, in_width, in_nails, in_thick, slct_shape):
     shape = get_shape(slct_shape,in_width,in_nails,in_thick)
     fig = shape.plotFrame()
 
@@ -242,8 +251,8 @@ def update_plot(layer_dropdown, color_picker, nshift_slider, trim_start_slider, 
         style_dict = {
 			'color' 		: color_picker[i]["hex"],
 			'Nshift' 		: nshift_slider[i],
-			'trimStart' 	: trim_start_slider[i],
-			'trimEnd' 		: trim_end_slider[i],
+			'trimStart' 	: trim_slider[i][0],
+			'trimEnd' 		: in_nails-trim_slider[i][1],
 			'parts' 		: section_selector[i]
 		}
         fig = getattr(shape, layer_dropdown[i])(fig,style_dict)
